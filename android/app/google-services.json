@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "805644359033",
+    "project_id": "titanic-resturant",
+    "storage_bucket": "titanic-resturant.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:805644359033:android:5728f6b26c0149d9d14ba8",
+        "android_client_info": {
+          "package_name": "com.dev.mahm.nass.resturantapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "805644359033-bqpvrppv1a9teskcsuf31h22n05m1ohk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvNRiJ4UJuv1SXVsbE8oi0Mh4bR9GrqU4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "805644359033-bqpvrppv1a9teskcsuf31h22n05m1ohk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
