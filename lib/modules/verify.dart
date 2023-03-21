@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:pinput/pinput.dart';
 import 'package:resturantapp/controlers/verify_controller.dart';
 import '../shared/componenets/componenet.dart';
 
@@ -10,6 +13,7 @@ class Verify extends StatelessWidget {
 
   var verifyController = Get.put(VerifyController());
   var _form = GlobalKey<FormState>();
+
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +92,32 @@ class Verify extends StatelessWidget {
                         ),
 
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.055,
+                          height: MediaQuery.of(context).size.height * 0.030,
+                        ),
+
+                        // عند انتهاء الوقت اخفاء المؤقت
+                        GetBuilder<VerifyController>(
+                          builder: (context)=>verifyController.secounds==0?SizedBox()
+                              :  buildTimer(),
+                        ),
+
+
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.030,
+                        ),
+
+
+                        // Input Verify Number
+                        Pinput(
+                          length: 6,
+                          // // defaultPinTheme: defaultPinTheme,
+                          // focusedPinTheme: focusedPinTheme,
+                          // // submittedPinTheme: submittedPinTheme,
+                          onChanged: (value) {
+
+                          },
+                          showCursor: true,
+                          onCompleted: (pin) => print(pin),
                         ),
 
                         SizedBox(
@@ -96,11 +125,31 @@ class Verify extends StatelessWidget {
                         ),
 
                         getDefaultButton(
-                            text: "Send",
+                            text: "Verify",
                             textColor: Color.fromRGBO(112, 112, 112, 1),
                             isShadow: true,
                             isGradinent: true,
                             function: () {}),
+
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.030,
+                        ),
+
+                        // عند انتهاء المؤقت يتم عرض زر اعادة الارسال
+                        GetBuilder<VerifyController>(
+                            builder: (context)=>verifyController.secounds==0?getDefaultButton(
+                                text: "Re Send",
+                                textColor: Color.fromRGBO(112, 112, 112, 1),
+                                isShadow: true,
+                                isGradinent: true,
+                                function: () {
+                                  verifyController.secounds=VerifyController.maxSecound;
+                                  verifyController.startTimer();
+                                })
+                                : SizedBox(),
+                        ),
+
+
                       ],
                     ),
                   ),
@@ -112,8 +161,35 @@ class Verify extends StatelessWidget {
       ),
     );
   }
+
+  // ميثود بناء المؤقت
+  Widget buildTimer()=>
+      GetBuilder<VerifyController>(
+      builder: (context)=>SizedBox(
+        height: 50,
+        width: 50,
+        child: Stack(
+          alignment: Alignment.center,
+          fit: StackFit.expand,
+          children: [
+            CircularProgressIndicator(
+              value: verifyController.secounds/VerifyController.maxSecound,
+              strokeWidth: 6,
+            ),
+            Center(
+              child: Text('${verifyController.secounds}',
+                style: TextStyle(fontSize: 20, color: Colors.black,fontWeight: FontWeight.w700),),
+            ),
+          ],
+        ),
+      ));
+
+
+
+
 }
 
+// Class to Draw Curve
 class CurvePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
@@ -152,3 +228,5 @@ class CurvePainter extends CustomPainter {
     return true;
   }
 }
+
+
