@@ -13,7 +13,7 @@ class PhoneNumber_Auth{
 
 
   // ميثود لارسال كود التحقق
-  Future<void> signInWithPhoneNumber(String phoneNumber , String name , String pass , BuildContext context) async{
+  static Future<void> signInWithPhoneNumber(String phoneNumber , String name , String pass , BuildContext context) async{
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: phoneNumber,
       verificationCompleted: (PhoneAuthCredential credential) async {
@@ -52,7 +52,7 @@ class PhoneNumber_Auth{
 
   }
 
-  Future<void> verifyedCode(BuildContext context , String code)async {
+ static Future<void> verifyedCode(BuildContext context , String code)async {
     final  FirebaseAuth auth = FirebaseAuth.instance;
     try{
       // Create a PhoneAuthCredential with the code
@@ -68,6 +68,7 @@ class PhoneNumber_Auth{
       // خطأ في العملية
       FocusScope.of(context).unfocus();
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Can\'t Be Verify !")));
+      Navigator.pop(context);
 
     }
 

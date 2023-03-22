@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:resturantapp/modles/PhoneNumber_Auth.dart';
 import 'package:resturantapp/shared/componenets/componenet.dart';
 
 
@@ -96,7 +97,7 @@ var signUpController=Get.put(SignUp_Controoler());
 
                       // Phone Edit Text
                       getDefaultTextFiled(
-                          keyBoardType: TextInputType.number,
+                          keyBoardType: TextInputType.phone,
                           isBorder: false,
                           isGradient: false,
                           text: "Phone Number",
@@ -164,15 +165,21 @@ var signUpController=Get.put(SignUp_Controoler());
                         height: MediaQuery.of(context).size.height * 0.010,
                       ),
 
+                      // تسجيل بواسطة رقم الهاتف وارسال رمز التأكيد
                       getDefaultButton(
                           text: "Sign Up",
                           textColor: Colors.black,
                           isShadow: true,
                           isGradinent: false,
-                          function: (){
+                          function: () async {
                             print("sdfjhskhsfsdg56463gsdgdgdt534354wef");
-                            if(_formKey.currentState!.validate()){
+                            if(!_formKey.currentState!.validate()){
                               _formKey.currentState!.save();
+                            }else{
+
+                              showDialog(context: context, builder: (context) => Center(child: CircularProgressIndicator(),));
+                              await PhoneNumber_Auth.signInWithPhoneNumber(phoneController.text.toString(), nameController.text.toString() , passController.text.toString(), context);
+
                             }
 
                           }),

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:pinput/pinput.dart';
 import 'package:resturantapp/controlers/verify_controller.dart';
+import 'package:resturantapp/modles/PhoneNumber_Auth.dart';
 import '../shared/componenets/componenet.dart';
 
 class Verify extends StatelessWidget {
@@ -114,7 +115,7 @@ class Verify extends StatelessWidget {
                           // focusedPinTheme: focusedPinTheme,
                           // // submittedPinTheme: submittedPinTheme,
                           onChanged: (value) {
-
+                            verifyController.onChageInput(value);
                           },
                           showCursor: true,
                           onCompleted: (pin) => print(pin),
@@ -124,12 +125,15 @@ class Verify extends StatelessWidget {
                           height: MediaQuery.of(context).size.height * 0.055,
                         ),
 
+
                         getDefaultButton(
                             text: "Verify",
                             textColor: Color.fromRGBO(112, 112, 112, 1),
                             isShadow: true,
                             isGradinent: true,
-                            function: () {}),
+                            function: () {
+                              verifyController.onVerifiedCode(context);
+                            }),
 
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.030,
