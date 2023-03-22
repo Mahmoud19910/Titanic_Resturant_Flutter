@@ -1,11 +1,15 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:resturantapp/modles/PhoneNumber_Auth.dart';
 
 class VerifyController extends GetxController{
   static const maxSecound=60;
   int secounds=maxSecound;
   Timer? timer;
+  String smsCode="";
 
   @override
   void onInit() {
@@ -14,6 +18,10 @@ class VerifyController extends GetxController{
     startTimer();
   }
 
+  void onChageInput(String value){
+    smsCode=value;
+    update();
+  }
 
   // ميثود بدء المؤقت
   void startTimer(){
@@ -33,6 +41,16 @@ class VerifyController extends GetxController{
 // ميثود ايقاف المؤقت
   void stopTimer(){
     timer?.cancel();
+  }
+
+
+  void onVerifiedCode(BuildContext context ){
+    if(smsCode==null){
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Can\'t Be Verify !")));
+    }else{
+      showDialog(context: context, builder: (context) => Center(child: CircularProgressIndicator(),));
+      PhoneNumber_Auth.verifyedCode(context, smsCode);
+    }
   }
 
 
