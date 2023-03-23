@@ -22,12 +22,13 @@ Future<void> main() async {
         initialRoute: '/splash',
           getPages: [
             GetPage(name: '/splash', page: ()=>Splash()),
-            GetPage(name: "/unboarding", page: () => UnBoarding(),),
-            GetPage(name: '/home', page: ()=> Home()),
+            GetPage(name: "/unboarding", page: () => UnBoarding()),
             GetPage(name: "/signup", page: ()=>SignUp()),
-            GetPage(name: "/signIn", page:()=>SignIn() ),
+            GetPage(name: "/signIn", page:()=>SignIn()),
             GetPage(name: "/forgetPass", page: ()=>ForgetPass()),
             GetPage(name: "/verify", page: ()=> Verify()),
+            GetPage(name: '/home', page: ()=> Home()),
+
 
           ],
 

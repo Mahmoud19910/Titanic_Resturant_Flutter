@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:resturantapp/controlers/forgetpass_controller.dart';
+import 'package:resturantapp/modles/PhoneNumber_Auth.dart';
 import 'package:resturantapp/shared/componenets/componenet.dart';
 
 class ForgetPass extends StatelessWidget {
@@ -127,11 +128,13 @@ class ForgetPass extends StatelessWidget {
                               textColor:Color.fromRGBO(112, 112, 112, 1),
                               isShadow: true,
                               isGradinent: true,
-                              function: (){
+                              function: () async {
                             if(!_form.currentState!.validate()){
                               _form.currentState!.save();
                             }else{
-                              Get.offAllNamed("/verify");
+                            // await PhoneNumber_Auth.signInWithPhoneNumber(phoneEdit.text.toString(), context);
+
+
                             }
 
                               }),

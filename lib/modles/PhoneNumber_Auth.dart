@@ -8,12 +8,13 @@ import '../modules/home.dart';
 class PhoneNumber_Auth{
 
   static String verifyCode="";
+  static String? uid;
   // SignUp_Controller signUp_Controller=SignUp_Controller();
 
 
-
   // ميثود لارسال كود التحقق
-  static Future<void> signInWithPhoneNumber(String phoneNumber , String name , String pass , BuildContext context) async{
+  static Future<void> signInWithPhoneNumber(String phoneNumber ,String? pass , String? name, BuildContext context) async{
+
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: phoneNumber,
       verificationCompleted: (PhoneAuthCredential credential) async {
@@ -43,8 +44,10 @@ class PhoneNumber_Auth{
       codeSent: (String verificationId, int? resendToken) {
         Navigator.pop(context);
         verifyCode=verificationId;
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>  Verify()));
-
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) =>  Verify(name: name,pass: pass,phone: phoneNumber,)),
+                (route) => false);
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
     );
@@ -58,6 +61,7 @@ class PhoneNumber_Auth{
       // Create a PhoneAuthCredential with the code
       PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId:PhoneNumber_Auth.verifyCode, smsCode: code);
       // Sign the user in (or link) with the credential
+      uid=auth.currentUser!.uid;
       await auth.signInWithCredential(credential);
       Navigator.pushNamedAndRemoveUntil(context, 'home', (route) => false);
 

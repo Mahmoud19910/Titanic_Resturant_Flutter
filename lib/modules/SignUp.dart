@@ -1,26 +1,24 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:resturantapp/modles/PhoneNumber_Auth.dart';
+import 'package:resturantapp/modules/verify.dart';
 import 'package:resturantapp/shared/componenets/componenet.dart';
-
-
-
-
-import 'package:flutter/cupertino.dart';
-
 import '../controlers/signup_controller.dart';
-import 'SignIn.dart';
+import '../modles/Google_SignIn.dart';
 
 class SignUp extends StatelessWidget {
    SignUp({Key? key}) : super(key: key);
-var signUpController=Get.put(SignUp_Controoler());
+
+   final _formKey = GlobalKey<FormState>();
+   var signUpController=Get.put(SignUp_Controller());
+
   TextEditingController nameController = new TextEditingController();
   TextEditingController phoneController = new TextEditingController();
   TextEditingController passController = new TextEditingController();
-  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +109,7 @@ var signUpController=Get.put(SignUp_Controoler());
                       ),
 
                       // Passowrd Edit Text
-                      GetBuilder<SignUp_Controoler>(
+                      GetBuilder<SignUp_Controller>(
                           builder: (context)=>getDefaultTextFiled(
                                   keyBoardType: TextInputType.visiblePassword,
                               isBorder: false,
@@ -136,7 +134,7 @@ var signUpController=Get.put(SignUp_Controoler());
                         height: MediaQuery.of(context).size.height * 0.015,
                       ),
 
-                      GetBuilder<SignUp_Controoler>(
+                      GetBuilder<SignUp_Controller>(
                          builder: (context)=> Row(
                            mainAxisAlignment: MainAxisAlignment.center,
                            children: [
@@ -176,10 +174,8 @@ var signUpController=Get.put(SignUp_Controoler());
                             if(!_formKey.currentState!.validate()){
                               _formKey.currentState!.save();
                             }else{
-
                               showDialog(context: context, builder: (context) => Center(child: CircularProgressIndicator(),));
-                              await PhoneNumber_Auth.signInWithPhoneNumber(phoneController.text.toString(), nameController.text.toString() , passController.text.toString(), context);
-
+                            await PhoneNumber_Auth.signInWithPhoneNumber(phoneController.text.toString(),passController.text.toString(),nameController.text.toString(),context);
                             }
 
                           }),
@@ -227,7 +223,27 @@ var signUpController=Get.put(SignUp_Controoler());
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image.asset("assets/images/gmail.png",height: 100,width: 100,),
+
+                            // التسجيل بواسطة جيميل
+                            InkWell(
+                                onTap:() async {
+                                  try{
+
+                                    try{
+                                      showDialog(context: context, builder: (context) => Center(child: CircularProgressIndicator(),));
+                                      UserCredential? userCreden= await GoogleSignInAuth.signInWithGoogle();
+                                      Get.offAllNamed("/home");
+                                    }catch(e){
+                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                                      Navigator.pop(context);
+                                    }
+
+                                  }catch(e){
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                                  }
+                                },
+                                child: Image.asset("assets/images/gmail.png",height: 100,width: 100,)),
+
                             Padding(
                               padding: const EdgeInsets.only(bottom: 7),
                               child: Image.asset("assets/images/facebook.png",height: 50,width: 50,),

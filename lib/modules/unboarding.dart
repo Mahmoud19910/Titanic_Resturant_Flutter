@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:resturantapp/modules/SignUp.dart';
 import '../controlers/unboad_controller.dart';
 import '../shared/componenets/componenet.dart';
 import '../shared/constant/constant_component.dart';

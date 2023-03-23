@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,11 +7,17 @@ import 'package:pinput/pinput.dart';
 import 'package:resturantapp/controlers/verify_controller.dart';
 import 'package:resturantapp/modles/PhoneNumber_Auth.dart';
 import '../shared/componenets/componenet.dart';
+import '../shared/data_resource/firebase_database/users_info_collection_controller.dart';
 
 class Verify extends StatelessWidget {
-  Verify({Key? key}) : super(key: key);
+  String? name;
+  String? pass;
+  String? phone;
+  Verify({this.name,this.pass, this.phone});
 
   var verifyController = Get.put(VerifyController());
+ var fireBaseUsersInfo= Get.put(UsersInfoCollectionController());
+
   var _form = GlobalKey<FormState>();
 
 
@@ -132,7 +137,9 @@ class Verify extends StatelessWidget {
                             isShadow: true,
                             isGradinent: true,
                             function: () {
-                              verifyController.onVerifiedCode(context);
+                              bool isVerified=verifyController.onVerifiedCode(context); // التحقق أنه تم عملية تأكيد الرمز
+                              fireBaseUsersInfo.saveUsersInfo(PhoneNumber_Auth.uid!,name!, phone!, pass!, context);
+
                             }),
 
                         SizedBox(

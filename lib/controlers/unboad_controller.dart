@@ -1,13 +1,19 @@
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:resturantapp/modules/home.dart';
 
 class UnboardingController extends GetxController{
 
 
-  int indexPagerView=0;
 
+  int indexPagerView=0;
   String title='Express delivery service';
   String decription='The application provides its users with a service Delivery by location by Google Maps';
+
 
   void setChanged(int index){
     indexPagerView=index;
@@ -37,6 +43,8 @@ class UnboardingController extends GetxController{
     }
 
   }
+
+
 
 
 }

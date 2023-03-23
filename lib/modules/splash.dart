@@ -7,6 +7,8 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:resturantapp/modules/home.dart';
 import 'package:resturantapp/modules/unboarding.dart';
 
+import '../modles/Google_SignIn.dart';
+
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
 
@@ -27,8 +29,18 @@ class _SplashState extends State<Splash> {
     // )
     // )
     // );
+
     Timer(const Duration(seconds: 2),() {
-      Get.off(duration: Duration(seconds: 1),UnBoarding());
+    Get.off(duration: Duration(seconds: 1),UnBoarding());
+    //   if(GoogleSignInAuth.auth.currentUser==null){
+    //     print("UserCredential == NULL");
+    //     Get.off(duration: Duration(seconds: 1),UnBoarding());
+    //   }else{
+    //     Get.offAllNamed("/home");
+    //     print("UserCredential != NULL");
+    //     Get.offNamed("/home");
+    //   }
+
     },);
   }
   @override

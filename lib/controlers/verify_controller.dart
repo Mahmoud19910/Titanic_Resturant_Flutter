@@ -43,15 +43,18 @@ class VerifyController extends GetxController{
     timer?.cancel();
   }
 
-
-  void onVerifiedCode(BuildContext context ){
+// عند ادخال رمز التأكيد
+  bool onVerifiedCode(BuildContext context ){
     if(smsCode==null){
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Can\'t Be Verify !")));
+      return false;
     }else{
       showDialog(context: context, builder: (context) => Center(child: CircularProgressIndicator(),));
       PhoneNumber_Auth.verifyedCode(context, smsCode);
+      return true;
     }
   }
+
 
 
 }

@@ -1,9 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:resturantapp/controlers/signin_controller.dart';
-
+import '../modles/Google_SignIn.dart';
 import '../shared/componenets/componenet.dart';
 
 class SignIn extends StatelessWidget {
@@ -181,7 +182,21 @@ class SignIn extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image.asset("assets/images/gmail.png",height: 100,width: 100,),
+                            // التسجيل بواسطة جيميل
+                            InkWell(
+                                onTap:() async {
+                                  try{
+                                    showDialog(context: context, builder: (context) => Center(child: CircularProgressIndicator(),));
+                                    UserCredential? userCreden= await GoogleSignInAuth.signInWithGoogle();
+                                    Get.offAllNamed("/home");
+                                  }catch(e){
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                                    Navigator.pop(context);
+                                  }
+
+                                },
+                                child: Image.asset("assets/images/gmail.png",height: 100,width: 100,)),
+
                             Padding(
                               padding: const EdgeInsets.only(bottom: 7),
                               child: Image.asset("assets/images/facebook.png",height: 50,width: 50,),
