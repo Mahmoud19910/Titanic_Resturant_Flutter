@@ -10,6 +10,7 @@ class FloorDataBaseController extends GetxController{
   final usersList = <UsersInfo>[].obs;
 
 
+
   @override
   void onInit() {
     // TODO: implement onInit
@@ -30,9 +31,14 @@ class FloorDataBaseController extends GetxController{
   void addUsers(UsersInfo usersInfo) async {
     await usersInfoDao.insertUsers(usersInfo);
   }
-  
-  void updateUsers(UsersInfo usersInfo){
-    usersInfoDao.updateUsers(usersInfo);
+
+  void updateUsers(UsersInfo usersInfo) async {
+    await usersInfoDao.updateUsers(usersInfo);
+  }
+
+  Future<UsersInfo?> getUsersByuid(String uid) async {
+   return await usersInfoDao.getUsersById(uid);
+
   }
 
 

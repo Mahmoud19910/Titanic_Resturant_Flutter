@@ -15,22 +15,29 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: Scaffold(body:
-    Container(height: double.infinity,width: double.infinity,color: Colors.greenAccent,
-    child: Column(
-      children: [
-        Center(child: MaterialButton(
-            onPressed: (){
+
+    return SafeArea(
+      child:Scaffold(body:
+      Container(height: double.infinity,width: double.infinity,color: Colors.greenAccent,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(child: MaterialButton(
+              onPressed: (){
 GoogleSignInAuth.signOut();
 Navigator.push(context, MaterialPageRoute(builder: (context)=> SignIn()));
-            },
-          child: Text("Sign Out"),
-        ),),
+              },
+            child: Text("Sign Out"),
+          ),),
 
-      ],
-    ),
-    )
-    )
+          Obx(() => Text("${floorController.usersList[0].uid}")),
+
+
+        ],
+      ),
+      )
+      )
+
     );
   }
 }
