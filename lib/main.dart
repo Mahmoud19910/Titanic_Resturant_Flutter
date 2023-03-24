@@ -24,7 +24,7 @@ Future<void> main() async {
           getPages: [
             GetPage(name: '/splash', page: ()=>Splash()),
             GetPage(name: "/unboarding", page: () => UnBoarding()),
-            GetPage(name: "/signup", page: ()=>SignUp() , binding: FireBaseBinding()),
+            GetPage(name: "/signup", page: ()=>SignUp() , binding:FireBaseBinding()),
             GetPage(name: "/signIn", page:()=>SignIn() , binding: FireBaseBinding()),
             GetPage(name: "/forgetPass", page: ()=>ForgetPass()),
             GetPage(name: "/verify", page: ()=> Verify()),

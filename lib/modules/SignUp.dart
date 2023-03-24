@@ -5,17 +5,20 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:resturantapp/modles/PhoneNumber_Auth.dart';
+import 'package:resturantapp/modles/usersinfo.dart';
 import 'package:resturantapp/modules/verify.dart';
 import 'package:resturantapp/shared/componenets/componenet.dart';
 import '../controlers/signup_controller.dart';
 import '../modles/Google_SignIn.dart';
 import '../shared/data_resource/firebase_database/users_info_collection_controller.dart';
+import '../shared/data_resource/local_database/floordatabase_controller.dart';
 
 class SignUp extends GetView<UsersInfoCollectionController> {
    SignUp({Key? key}) : super(key: key);
 
    final _formKey = GlobalKey<FormState>();
    var signUpController=Get.put(SignUp_Controller());
+   var floorController=Get.put(FloorDataBaseController());
 
   TextEditingController nameController = new TextEditingController();
   TextEditingController phoneController = new TextEditingController();
@@ -235,6 +238,7 @@ class SignUp extends GetView<UsersInfoCollectionController> {
                                       UserCredential? userCreden= await GoogleSignInAuth.signInWithGoogle();
                                       User? userInfo=userCreden!.user;
                                       controller.saveUsersInfo(userInfo!.uid ,"", userInfo.phoneNumber.toString(), "", context);
+                                      floorController.addUsers(UsersInfo(uid: userInfo.uid));
                                       Get.offAllNamed("/home");
                                     }catch(e){
                                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));

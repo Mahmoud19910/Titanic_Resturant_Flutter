@@ -25,7 +25,7 @@ class PhoneNumber_Auth{
           if (value.user != null) {
             Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => const Home()),
+                MaterialPageRoute(builder: (context) =>  Home()),
                     (route) => false);
           }
 
