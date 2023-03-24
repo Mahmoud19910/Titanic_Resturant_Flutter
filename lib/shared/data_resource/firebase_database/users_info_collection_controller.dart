@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 class UsersInfoCollectionController extends GetxController{
   FirebaseFirestore firestore= FirebaseFirestore.instance;
 
+
+  // حفظ بيانات المستخدم
   void saveUsersInfo(String uid , String name  , String phoneNumber , String pass , BuildContext context){
     Map<String , dynamic> mapArray = {
       "uid" : uid,
@@ -20,5 +22,11 @@ class UsersInfoCollectionController extends GetxController{
 
     }
 
+  }
+
+  Future<List<DocumentSnapshot>> getAllUsersInfo() async {
+    QuerySnapshot querySnapshot =await firestore.collection("UsersInfo").get();
+   List<DocumentSnapshot> list= querySnapshot.docs;
+   return list;
   }
 }
