@@ -31,15 +31,15 @@ class _SplashState extends State<Splash> {
     // );
 
     Timer(const Duration(seconds: 2),() {
-    Get.off(duration: Duration(seconds: 1),UnBoarding());
-    //   if(GoogleSignInAuth.auth.currentUser==null){
-    //     print("UserCredential == NULL");
-    //     Get.off(duration: Duration(seconds: 1),UnBoarding());
-    //   }else{
-    //     Get.offAllNamed("/home");
-    //     print("UserCredential != NULL");
-    //     Get.offNamed("/home");
-    //   }
+    // Get.off(duration: Duration(seconds: 1),UnBoarding());
+      if(GoogleSignInAuth.auth.currentUser==null){
+        print("UserCredential == NULL");
+        Get.off(duration: Duration(seconds: 1),UnBoarding());
+      }else{
+        Get.offAllNamed("/home");
+        print("UserCredential != NULL");
+        Get.offNamed("/home");
+      }
 
     },);
   }

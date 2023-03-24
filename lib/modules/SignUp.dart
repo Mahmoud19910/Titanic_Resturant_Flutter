@@ -11,12 +11,11 @@ import '../controlers/signup_controller.dart';
 import '../modles/Google_SignIn.dart';
 import '../shared/data_resource/firebase_database/users_info_collection_controller.dart';
 
-class SignUp extends StatelessWidget {
+class SignUp extends GetView<UsersInfoCollectionController> {
    SignUp({Key? key}) : super(key: key);
 
    final _formKey = GlobalKey<FormState>();
    var signUpController=Get.put(SignUp_Controller());
-   var firBseUsersCollections=Get.put(UsersInfoCollectionController());
 
   TextEditingController nameController = new TextEditingController();
   TextEditingController phoneController = new TextEditingController();
@@ -235,7 +234,7 @@ class SignUp extends StatelessWidget {
                                       showDialog(context: context, builder: (context) => Center(child: CircularProgressIndicator(),));
                                       UserCredential? userCreden= await GoogleSignInAuth.signInWithGoogle();
                                       User? userInfo=userCreden!.user;
-                                      firBseUsersCollections.saveUsersInfo(userInfo!.uid ,"", userInfo.phoneNumber.toString(), "", context);
+                                      controller.saveUsersInfo(userInfo!.uid ,"", userInfo.phoneNumber.toString(), "", context);
                                       Get.offAllNamed("/home");
                                     }catch(e){
                                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));

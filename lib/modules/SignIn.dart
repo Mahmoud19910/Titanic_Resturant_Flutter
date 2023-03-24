@@ -9,11 +9,10 @@ import '../modles/Google_SignIn.dart';
 import '../shared/componenets/componenet.dart';
 import '../shared/data_resource/firebase_database/users_info_collection_controller.dart';
 
-class SignIn extends StatelessWidget {
+class SignIn extends GetView<UsersInfoCollectionController> {
    SignIn({Key? key}) : super(key: key);
    var _formKey=GlobalKey<FormState>();
    var signInController=Get.put(SignIn_Controller());
-   var usersCollectionController=Get.put(UsersInfoCollectionController());
   TextEditingController phoneController = new TextEditingController();
   TextEditingController passController = new TextEditingController();
 
@@ -129,8 +128,8 @@ class SignIn extends StatelessWidget {
                             if(!_formKey.currentState!.validate()){
                               _formKey.currentState!.save();
                             }else{
-                              List<DocumentSnapshot> list = await usersCollectionController.getAllUsersInfo();
-                              
+
+                              List<DocumentSnapshot> list = await controller.getAllUsersInfo();
                               for(DocumentSnapshot dataList in list){
 
                                 Map<String, dynamic> data = dataList.data() as Map<String , dynamic>; // Retrieve the map of field names and values for the document
