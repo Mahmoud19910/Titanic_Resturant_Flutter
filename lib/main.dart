@@ -8,7 +8,7 @@ import 'package:resturantapp/modles/PhoneNumber_Auth.dart';
 import 'package:resturantapp/modules/ForgetPass.dart';
 import 'package:resturantapp/modules/SignIn.dart';
 import 'package:resturantapp/modules/SignUp.dart';
-import 'package:resturantapp/modules/home.dart';
+import 'package:resturantapp/modules/navigator_screen.dart';
 import 'package:resturantapp/modules/splash.dart';
 import 'package:resturantapp/modules/verify.dart';
 import 'package:resturantapp/shared/data_resource/firebase_database/firebase_binding.dart';

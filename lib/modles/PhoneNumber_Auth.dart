@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../modules/verify.dart';
-import '../modules/home.dart';
+import '../modules/navigator_screen.dart';
 
 class PhoneNumber_Auth{
 

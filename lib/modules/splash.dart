@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:resturantapp/modules/home.dart';
+import 'package:resturantapp/modules/navigator_screen.dart';
 import 'package:resturantapp/modules/unboarding.dart';
 
 import '../modles/Google_SignIn.dart';
