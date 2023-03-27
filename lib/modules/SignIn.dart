@@ -7,9 +7,9 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:resturantapp/controlers/signin_controller.dart';
 import '../modles/Google_SignIn.dart';
 import '../shared/componenets/componenet.dart';
-import '../shared/data_resource/firebase_database/users_info_collection_controller.dart';
+import '../shared/data_resource/cloud/cloud_controller.dart';
 
-class SignIn extends GetView<UsersInfoCollectionController> {
+class SignIn extends GetView<CloudController> {
    SignIn({Key? key}) : super(key: key);
    var _formKey=GlobalKey<FormState>();
    var signInController=Get.put(SignIn_Controller());
@@ -130,8 +130,8 @@ class SignIn extends GetView<UsersInfoCollectionController> {
                             }else{
 
                               List<DocumentSnapshot> list = await controller.getAllUsersInfo();
+                              // التحقق من رقم الهاتف و كلمة المرور بتسجيل الدخول
                               for(DocumentSnapshot dataList in list){
-
                                 Map<String, dynamic> data = dataList.data() as Map<String , dynamic>; // Retrieve the map of field names and values for the document
                                 String phone=data["phoneNumber"];
                                 String pass=data["pass"];
@@ -141,7 +141,7 @@ class SignIn extends GetView<UsersInfoCollectionController> {
                                   Get.offAllNamed("/home");
 
                                 }else{
-                                  print("Fail");
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Un Successfully")));
                                 }
                               }
                             }

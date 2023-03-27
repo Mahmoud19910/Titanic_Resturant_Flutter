@@ -11,8 +11,9 @@ import 'package:resturantapp/modules/SignUp.dart';
 import 'package:resturantapp/modules/navigator_screen.dart';
 import 'package:resturantapp/modules/splash.dart';
 import 'package:resturantapp/modules/verify.dart';
-import 'package:resturantapp/shared/data_resource/firebase_database/firebase_binding.dart';
+import 'package:resturantapp/shared/data_resource/cloud/data_binding.dart';
 
+import 'modules/home_screen.dart';
 import 'modules/unboarding.dart';
 
 Future<void> main() async {
@@ -24,11 +25,12 @@ Future<void> main() async {
           getPages: [
             GetPage(name: '/splash', page: ()=>Splash()),
             GetPage(name: "/unboarding", page: () => UnBoarding()),
-            GetPage(name: "/signup", page: ()=>SignUp() , binding:FireBaseBinding()),
-            GetPage(name: "/signIn", page:()=>SignIn() , binding: FireBaseBinding()),
+            GetPage(name: "/signup", page: ()=>SignUp() , binding:DataBinding()),
+            GetPage(name: "/signIn", page:()=>SignIn() , binding: DataBinding()),
             GetPage(name: "/forgetPass", page: ()=>ForgetPass()),
             GetPage(name: "/verify", page: ()=> Verify()),
             GetPage(name: '/home', page: ()=> Home()),
+            GetPage(name: '/homeScreen', page: ()=> HomeScreen() , binding: DataBinding()),
 
 
           ],

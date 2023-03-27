@@ -10,10 +10,10 @@ import 'package:resturantapp/modules/verify.dart';
 import 'package:resturantapp/shared/componenets/componenet.dart';
 import '../controlers/signup_controller.dart';
 import '../modles/Google_SignIn.dart';
-import '../shared/data_resource/firebase_database/users_info_collection_controller.dart';
+import '../shared/data_resource/cloud/cloud_controller.dart';
 import '../shared/data_resource/local_database/floordatabase_controller.dart';
 
-class SignUp extends GetView<UsersInfoCollectionController> {
+class SignUp extends GetView<CloudController> {
    SignUp({Key? key}) : super(key: key);
 
    final _formKey = GlobalKey<FormState>();

@@ -46,6 +46,10 @@ dependencies:
   curved_nav_bar: ^0.0.2
   searchbar_animation: ^0.0.4
   video_player: ^2.1.13
+  http: ^0.13.5
+  infinite_scroll_tab_view: ^1.0.3
+
+
 
 
 
