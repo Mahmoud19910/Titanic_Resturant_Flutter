@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import '../controlers/home_controller.dart';
-import '../shared/componenets/componenet.dart';
+import 'package:infinite_scroll_tab_view/infinite_scroll_tab_view.dart';
+
 
 class FavoriteScreen extends StatefulWidget {
    FavoriteScreen({Key? key}) : super(key: key);
@@ -16,104 +14,50 @@ class FavoriteScreen extends StatefulWidget {
 
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
-  var homeController=Get.put(HomeController());
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    homeController.controller.pause();
-  }
+  List<String> list=["gsdg" , "sgsg" ,"egseg" , "efef"];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        color: Colors.white,
-        child: Column(
-          children: [
+        child: InfiniteScrollTabView(
+          contentLength: list.length,
+          onTabTap: (index) {
+            debugPrint('tapped $index');
+          },
+          tabBuilder: (index, isSelected) => Text(
+            list[index],
+            style: TextStyle(
+              color: isSelected ? Colors.pink : Colors.black54,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+          ),
+          separator: const BorderSide(color: Colors.black12, width: 2.0),
+          onPageChanged: (index) => debugPrint('page changed to $index.'),
+          indicatorColor: Colors.pink,
+          pageBuilder: (context, index, _) {
+            return SizedBox.expand(
+              child: Center(
+                child: Text(
+                 list[index],
+                  style: Theme.of(context).textTheme.headline3!.copyWith(
 
-//App Bar
-            Container(
-              height: 56,
-              width: MediaQuery.of(context).size.width,
-              color: Color.fromRGBO(227, 227, 227, 1),
-              child: Padding(
-                padding: const EdgeInsets.only(right: 5, left: 5),
-                child: Row(
-                  children: [
-// Notifications
-                    Stack(
-                      children: [
-                        ShaderMask(
-                          shaderCallback: (Rect bounds) {
-                            return LinearGradient(
-                              colors: [
-                                Color.fromRGBO(242, 221, 128, 1),
-                                Color.fromRGBO(199, 143, 64, 1)
-                              ],
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                            ).createShader(bounds);
-                          },
-                          child: Icon(Icons.notifications,
-                              size: 31, color: Colors.white),
-                        ),
-                        CircleAvatar(
-                          radius: 8,
-                          backgroundColor: Colors.red,
-                          child: Text(
-                            "1",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 10,
-                                fontWeight: FontWeight.w700),
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    Expanded(child: SizedBox()),
-
-// Title
-                    getDefaultText(
-                      text: 'My Favorite',
-                      fontSize: 20,
-                      color: Colors.black,
-                      setShadow: true,
-                      fontWeight: FontWeight.w500,
-                    ),
-
-                    Expanded(child: SizedBox()),
-
-// Drawer Layout
-                    Container(
-                      height: 25,
-                      width: 25,
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Color.fromRGBO(242, 221, 128, 1),
-                                Color.fromRGBO(199, 143, 64, 1)
-                              ])),
-                      child: Icon(
-                        Icons.format_list_bulleted,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            );
+          },
         ),
       ),
     );
   }
 }
+
+
 
 
 
