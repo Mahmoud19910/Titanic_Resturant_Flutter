@@ -4,8 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:resturantapp/modles/meals.dart';
 
-import 'category.dart';
+import '../../../modles/category.dart';
 
 
 
@@ -58,29 +59,48 @@ class CloudController extends GetxController{
     }
   }
   
-
-  //Fire Base و حفظها في  API جلب البيانات من
-  void saveFoodCategoryes() async {
-    List<Category>? listCategory=await getAllCategory();
-List<Category> litFireBase = await getCategoryFromFireBase();
-// Nested Loop to refresh data
-try{
-  for(int i=0 ; i<=listCategory!.length ; i++ ){
-    for(int t=i+1 ; t<litFireBase.length ; t++){
-      if(listCategory.elementAt(i)!= litFireBase.elementAt(t)){
-        Map<String , dynamic> map ={
-          "id":listCategory.elementAt(i).id,
-          "imageUrl":listCategory.elementAt(i).imageUrl,
-          "description":listCategory.elementAt(i).description,
-          "nameCategory":listCategory.elementAt(i).nameCategory
-        };
-      }
-
+  // API من  Category Meals جلب بيانات
+  Future<List<Meals>> getAllMealCategory(String categoryName) async {
+    final response=await http.get(Uri.parse("https://www.themealdb.com/api/json/v1/1/filter.php?c=$categoryName"));
+    if(response.statusCode==200){
+      final List<dynamic> jsonList = json.decode(response.body)['meals'];
+      final mealsList = jsonList.map((json) => Meals.fromJson(json)).toList();
+      return mealsList;
+    }else {
+      return [];
     }
   }
-}catch(e){
-  print(e.toString());
-}
+  
+
+
+
+  //FireBase ميثود لتحديث الأقسام في
+  void saveFoodCategoryes() async {
+    List<Category>? listCategory = await getAllCategory();
+    List<Category> listFireBase = await getCategoryFromFireBase();
+    try {
+      for (Category category in listCategory!) {
+        bool isFound = false;
+        for (Category firebaseCategory in listFireBase) {
+          if (category.id == firebaseCategory.id) {
+            isFound = true;
+            break;
+          }
+        }
+
+        if (!isFound) {
+          Map<String, dynamic> map = {
+            "id": category.id,
+            "imageUrl": category.imageUrl,
+            "description": category.description,
+            "nameCategory": category.nameCategory
+          };
+          await firestore.collection("Category").add(map);
+        }
+      }
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   //Fire Base من  Category جلب بيانات
@@ -103,10 +123,61 @@ try{
 
        }
      }catch(e){
+     }
+    return list;
+  }
 
+
+  //Fire Base حفظ جميع الأطعمة من عن طريق تمرير اسم القسم من
+  void saveMealsCategory(String categoryName) async {
+    List<Meals> listMeals = await getAllMealCategory(categoryName);
+    List<Meals> listFireBase = await getMealsFromFireBase(categoryName);
+    try{
+      for(Meals mealsApi in listMeals){
+        bool isFound=false;
+        for(Meals mealsFireBase in listFireBase){
+          if(mealsApi.idMeals==mealsFireBase.idMeals){
+            isFound=true;
+            break;
+          }
+        }
+
+        if(!isFound){
+          Map<String , dynamic> map={
+            "id":mealsApi.idMeals,
+            "nameMeals":mealsApi.nameMeals,
+            "imageMeals":mealsApi.imageUrlMeals,
+          };
+          await firestore.collection(categoryName).add(map);
+        }
+      }
+    }catch(e){
+      print(e.toString());
+    }
+
+
+
+  }
+
+  //Fire Base جلب جميع الأطعمة من عن طريق تمرير اسم القسم من
+  Future<List<Meals>> getMealsFromFireBase(String categoryName) async {
+    List<Meals> listMeals=[];
+    QuerySnapshot querySnapshot= await firestore.collection(categoryName).get();
+   List<DocumentSnapshot> list=querySnapshot.docs;
+
+   try{
+     for(DocumentSnapshot meals in list){
+       Map<String , dynamic>? mapMeals=meals.data() as Map<String, dynamic>?;
+       String id=mapMeals!['id'];
+       String name=mapMeals!['nameMeals'];
+       String image=mapMeals!['imageMeals'];
+       listMeals.add(Meals(idMeals: id, nameMeals: name, imageUrlMeals: image));
      }
 
-    return list;
+   }catch(e){
+     print(e.toString());
+   }
+    return listMeals;
   }
 
 
