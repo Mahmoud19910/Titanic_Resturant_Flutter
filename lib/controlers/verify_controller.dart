@@ -50,7 +50,7 @@ class VerifyController extends GetxController{
       return false;
     }else{
       showDialog(context: context, builder: (context) => Center(child: CircularProgressIndicator(),));
-      PhoneNumber_Auth.verifyedCode(context, smsCode);
+      PhoneNumber_Auth.verifyedCode(context, smsCode!);
       return true;
     }
   }

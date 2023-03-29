@@ -55,28 +55,30 @@ class PhoneNumber_Auth{
 
   }
 
- static Future<void> verifyedCode(BuildContext context , String code)async {
-    final  FirebaseAuth auth = FirebaseAuth.instance;
-    try{
-      // Create a PhoneAuthCredential with the code
-      PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId:PhoneNumber_Auth.verifyCode, smsCode: code);
-      // Sign the user in (or link) with the credential
-      uid=auth.currentUser!.uid;
-      await auth.signInWithCredential(credential);
-      Navigator.pushNamedAndRemoveUntil(context, 'home', (route) => false);
+ static   // تأكيد رقم الهاتف عن طريق الرمز المرسل
+ Future<void> verifyedCode(BuildContext context , String code)async {
+   final  FirebaseAuth auth = FirebaseAuth.instance;
+
+   try{
+     print("verifyCode verifyCode verifyCode  :$verifyCode");
+     // Create a PhoneAuthCredential with the code
+     PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId:PhoneNumber_Auth.verifyCode, smsCode: code);
+
+     // Sign the user in (or link) with the credential
+     await auth.signInWithCredential(credential);
+     Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => true);
 
 
+   }
+   catch(e){
+     // خطأ في العملية
+     FocusScope.of(context).unfocus();
+     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Can\'t Be Verify !")));
 
-    }
-    catch(e){
-      // خطأ في العملية
-      FocusScope.of(context).unfocus();
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Can\'t Be Verify !")));
-      Navigator.pop(context);
+   }
 
-    }
+ }
 
-  }
 
 
 }

@@ -178,11 +178,16 @@ class SignIn extends GetView<CloudController> {
                               setShadow: false,
                               fontWeight: FontWeight.w300),
 
-                          getUnderLineText(text: " Sign Up",
-                              fontSize: 16,
-                              color: Color.fromRGBO(112, 112, 112, 1),
-                              setShadow: false,
-                              fontWeight: FontWeight.w300)
+                          InkWell(
+                            onTap: (){
+                              Get.offAllNamed("/signup");
+                            },
+                            child: getUnderLineText(text: " Sign Up",
+                                fontSize: 16,
+                                color: Color.fromRGBO(112, 112, 112, 1),
+                                setShadow: false,
+                                fontWeight: FontWeight.w300),
+                          )
                         ],
                       ),
 

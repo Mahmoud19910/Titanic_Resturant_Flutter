@@ -44,10 +44,14 @@ dependencies:
   get: ^4.6.5
   floor: ^1.4.1
   curved_nav_bar: ^0.0.2
-  searchbar_animation: ^0.0.4
+  animation_search_bar: ^0.0.10
   video_player: ^2.1.13
   http: ^0.13.5
   infinite_scroll_tab_view: ^1.0.3
+  liquid_ui: ^1.0.0
+  shrink_sidemenu: ^2.0.0+2-null-safety
+
+
 
 
 

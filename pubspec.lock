@@ -22,6 +22,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.2.0"
+  animation_search_bar:
+    dependency: "direct main"
+    description:
+      name: animation_search_bar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.10"
   args:
     dependency: transitive
     description:
@@ -300,6 +307,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  flutter_riverpod:
+    dependency: transitive
+    description:
+      name: flutter_riverpod
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.3.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -443,6 +457,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  liquid_ui:
+    dependency: "direct main"
+    description:
+      name: liquid_ui
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0+9"
   lists:
     dependency: transitive
     description:
@@ -541,13 +562,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.2.1"
-  searchbar_animation:
-    dependency: "direct main"
+  riverpod:
+    dependency: transitive
     description:
-      name: searchbar_animation
+      name: riverpod
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.4"
+    version: "2.3.2"
   shelf:
     dependency: transitive
     description:
@@ -562,6 +583,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
+  shrink_sidemenu:
+    dependency: "direct main"
+    description:
+      name: shrink_sidemenu
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0+2-null-safety"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -623,6 +651,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.10.0"
+  state_notifier:
+    dependency: transitive
+    description:
+      name: state_notifier
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.7.2+1"
   stream_channel:
     dependency: transitive
     description:
