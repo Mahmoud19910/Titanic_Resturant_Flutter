@@ -34,135 +34,140 @@ class Verify extends GetView<CloudController> {
             child: Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-              child: Column(
-                children: [
-                  Stack(
-                    alignment: Alignment.topCenter,
-                    children: [
-                      // Curved Draw
-                      Container(
-                        height: 250,
-                        width: double.infinity,
-                        child: CustomPaint(
-                          painter: CurvePainter(),
-                        ),
-                      ),
-
-                      Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(15),
-                            child: Row(
-                              children: [
-                                InkWell(
-                                    onTap: () {
-                                      Get.offAllNamed("/forgetPass");
-                                    },
-                                    child: Icon(
-                                      Icons.arrow_back_ios_new,
-                                      color: Colors.white,
-                                    ))
-                              ],
-                            ),
-                          ),
-                          Image.asset(
-                            "assets/images/mainlogo.png",
-                            width: 170,
-                            height: 170,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Stack(
+                      alignment: Alignment.topCenter,
                       children: [
-                        // Text View
-                        Text(
-                          "You will receive a 6-digit text message To \n confirm  the account, enter it",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: Color.fromRGBO(112, 112, 112, 1),
-                              fontFamily: "SF-Pro",
-                              shadows: [
-                                BoxShadow(
-                                    color: Color.fromRGBO(0, 0, 0, 0.16),
-                                    blurRadius: 6,
-                                    offset: Offset(0, 3))
-                              ],
-                              fontWeight: FontWeight.w500),
+                        // Curved Draw
+                        Container(
+                          height: 250,
+                          width: double.infinity,
+                          child: CustomPaint(
+                            painter: CurvePainter(),
+                          ),
                         ),
 
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.030,
+                        Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(15),
+                              child: Row(
+                                children: [
+                                  InkWell(
+                                      onTap: () {
+                                        Get.offAllNamed("/forgetPass");
+                                      },
+                                      child: Icon(
+                                        Icons.arrow_back_ios_new,
+                                        color: Colors.white,
+                                      ))
+                                ],
+                              ),
+                            ),
+                            Image.asset(
+                              "assets/images/mainlogo.png",
+                              width: 170,
+                              height: 170,
+                            ),
+                          ],
                         ),
-
-                        // عند انتهاء الوقت اخفاء المؤقت
-                        GetBuilder<VerifyController>(
-                          builder: (context)=>verifyController.secounds==0?SizedBox()
-                              :  buildTimer(),
-                        ),
-
-
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.030,
-                        ),
-
-
-                        // Input Verify Number
-                        Pinput(
-                          length: 6,
-                          // // defaultPinTheme: defaultPinTheme,
-                          // focusedPinTheme: focusedPinTheme,
-                          // // submittedPinTheme: submittedPinTheme,
-                          onChanged: (value) {
-                            verifyController.onChageInput(value);
-                          },
-                          showCursor: true,
-                          onCompleted: (pin) => print(pin),
-                        ),
-
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.055,
-                        ),
-
-
-                        getDefaultButton(
-                            text: "Verify",
-                            textColor: Color.fromRGBO(112, 112, 112, 1),
-                            isShadow: true,
-                            isGradinent: true,
-                            function: () {
-                              bool isVerified=verifyController.onVerifiedCode(context); // التحقق أنه تم عملية تأكيد الرمز
-                              controller.saveUsersInfo(PhoneNumber_Auth.uid!,name!, phone!, pass!, context);
-
-                            }),
-
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.030,
-                        ),
-
-                        // عند انتهاء المؤقت يتم عرض زر اعادة الارسال
-                        GetBuilder<VerifyController>(
-                            builder: (context)=>verifyController.secounds==0?getDefaultButton(
-                                text: "Re Send",
-                                textColor: Color.fromRGBO(112, 112, 112, 1),
-                                isShadow: true,
-                                isGradinent: true,
-                                function: () {
-                                  verifyController.secounds=VerifyController.maxSecound;
-                                  verifyController.startTimer();
-                                })
-                                : SizedBox(),
-                        ),
-
-
                       ],
                     ),
-                  ),
-                ],
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        children: [
+                          // Text View
+                          Text(
+                            "You will receive a 6-digit text message To \n confirm  the account, enter it",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Color.fromRGBO(112, 112, 112, 1),
+                                fontFamily: "SF-Pro",
+                                shadows: [
+                                  BoxShadow(
+                                      color: Color.fromRGBO(0, 0, 0, 0.16),
+                                      blurRadius: 6,
+                                      offset: Offset(0, 3))
+                                ],
+                                fontWeight: FontWeight.w500),
+                          ),
+
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.030,
+                          ),
+
+                          // عند انتهاء الوقت اخفاء المؤقت
+                          GetBuilder<VerifyController>(
+                            builder: (context)=>verifyController.secounds==0?SizedBox()
+                                :  buildTimer(),
+                          ),
+
+
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.030,
+                          ),
+
+
+                          // Input Verify Number
+                          Pinput(
+                            length: 6,
+                            // // defaultPinTheme: defaultPinTheme,
+                            // focusedPinTheme: focusedPinTheme,
+                            // // submittedPinTheme: submittedPinTheme,
+                            onChanged: (value) {
+                              verifyController.onChageInput(value);
+                            },
+                            showCursor: true,
+                            onCompleted: (pin) => print(pin),
+                          ),
+
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.055,
+                          ),
+
+
+                          GetBuilder<VerifyController>(builder: (_)=> getDefaultButton(
+                              text: "Verify",
+                              textColor: Color.fromRGBO(112, 112, 112, 1),
+                              isShadow: true,
+                              isGradinent: true,
+                              function: () async {
+
+                                PhoneNumber_Auth.verifyedCode(context, verifyController.smsCode);
+                                await controller.saveUsersInfo(PhoneNumber_Auth.uid!,name!, phone!, pass!, context);
+
+                              }),),
+
+
+
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.030,
+                          ),
+
+                          // عند انتهاء المؤقت يتم عرض زر اعادة الارسال
+                          GetBuilder<VerifyController>(
+                              builder: (context)=>verifyController.secounds==0?getDefaultButton(
+                                  text: "Re Send",
+                                  textColor: Color.fromRGBO(112, 112, 112, 1),
+                                  isShadow: true,
+                                  isGradinent: true,
+                                  function: () {
+                                    verifyController.secounds=VerifyController.maxSecound;
+                                    verifyController.startTimer();
+                                  })
+                                  : SizedBox(),
+                          ),
+
+
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

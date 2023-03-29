@@ -41,6 +41,7 @@ class GoogleSignInAuth{
   static Future<void> signOut() async {
     await GoogleSignIn().signOut();
     await auth.signOut();
+    print("Sign Out      ...................   Exit");
   }
 
 

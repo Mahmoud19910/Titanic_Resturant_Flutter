@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:resturantapp/modules/home_screen.dart';
 import 'package:video_player/video_player.dart';
 
 class HomeController extends GetxController{
@@ -7,6 +8,9 @@ class HomeController extends GetxController{
   late final VideoPlayerController controller;
   bool isPlaying = false;
   bool isMute=false;
+
+  late List<bool>boolFavorite=List.generate(100, (_) => false);
+
 
 
   @override
@@ -44,6 +48,7 @@ class HomeController extends GetxController{
 
   }
 
+  // كتم صوت الفيديو
   void muteSounds(){
     isMute=!isMute;
     update();
@@ -52,6 +57,12 @@ class HomeController extends GetxController{
     }else{
       controller.setVolume(1);
     }
+  }
+
+  // ميثود الاضاقة الى المفضلة
+  void onClickAddToFavorite(int index ){
+     boolFavorite[index]=!boolFavorite[index];
+    update();
   }
 
 }
