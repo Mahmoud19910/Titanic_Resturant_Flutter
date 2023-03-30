@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
 class ForgetPassController extends GetxController{
-  bool showPass = true;
+  RxBool showPass = true.obs;
 
   @override
   void onInit() {
@@ -11,7 +11,6 @@ class ForgetPassController extends GetxController{
   }
 
   void showPassFunc(){
-    showPass=!showPass;
-    update();
+    showPass.value=!showPass.value;
   }
 }

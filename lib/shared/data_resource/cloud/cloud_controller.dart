@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:resturantapp/controlers/verify_controller.dart';
 import 'package:resturantapp/modles/favorite.dart';
 import 'package:resturantapp/modles/meals.dart';
 import 'package:resturantapp/modles/search_in_meals.dart';
@@ -16,6 +17,11 @@ class CloudController extends GetxController{
 
   FirebaseFirestore firestore= FirebaseFirestore.instance;
 
+  var verifyController = Get.find<VerifyController>();
+  var form = GlobalKey<FormState>();
+
+  RxString name = 'abed'.obs;
+
   @override
   void onInit() {
     saveFoodCategoryes();
@@ -24,15 +30,16 @@ class CloudController extends GetxController{
   }
 
   // حفظ بيانات المستخدم
-  Future<void> saveUsersInfo(String uid , String name  , String phoneNumber , String pass , BuildContext context) async {
-    Map<String , dynamic> mapArray = {
-      "uid" : uid,
-      "name" : name,
-      "phoneNumber" : phoneNumber,
-      "pass" : pass
-    };
+  void saveUsersInfo(String uid , String name  , String phoneNumber , String pass , BuildContext context) async {
+
 
     try{
+      Map<String , dynamic> mapArray = {
+        "uid" : uid,
+        "name" : name,
+        "phoneNumber" : phoneNumber,
+        "pass" : pass
+      };
       await firestore.collection("UsersInfo").add(mapArray);
     }catch(e){
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
@@ -71,6 +78,10 @@ class CloudController extends GetxController{
     }else {
       return [];
     }
+  }
+
+  updateName(String newValue){
+    name.value = newValue;
   }
   
  

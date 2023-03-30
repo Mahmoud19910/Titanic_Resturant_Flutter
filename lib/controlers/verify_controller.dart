@@ -9,7 +9,9 @@ class VerifyController extends GetxController{
   static const maxSecound=60;
   int secounds=maxSecound;
   Timer? timer;
-  String smsCode="";
+  RxString smsCode="".obs;
+
+
 
   @override
   void onInit() {
@@ -19,8 +21,7 @@ class VerifyController extends GetxController{
   }
 
   void onChageInput(String value){
-    smsCode=value;
-    update();
+    smsCode.value=value;
   }
 
   // ميثود بدء المؤقت
@@ -50,7 +51,7 @@ class VerifyController extends GetxController{
       return false;
     }else{
       showDialog(context: context, builder: (context) => Center(child: CircularProgressIndicator(),));
-      PhoneNumber_Auth.verifyedCode(context, smsCode!);
+      PhoneNumber_Auth.verifyedCode(context, smsCode.value!);
       return true;
     }
   }

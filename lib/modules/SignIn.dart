@@ -58,8 +58,8 @@ class SignIn extends GetView<CloudController> {
 
                       Image.asset(
                         "assets/images/mainlogo.png",
-                        width: 170,
-                        height: 170,
+                        width: MediaQuery.of(context).size.width*1.95,
+                        height: MediaQuery.of(context).size.height*0.190,
                       ),
 
 
@@ -93,25 +93,23 @@ class SignIn extends GetView<CloudController> {
                       ),
 
                       // Passowrd Edit Text
-                      GetBuilder<SignIn_Controller>(
-                        builder: (context)=>getDefaultTextFiled(
-                            keyBoardType: TextInputType.visiblePassword,
-                            isBorder: false,
-                            text: "Passowrd",
-                            isGradient: false,
-                            controller: passController,
-                            showPass:signInController.showPass ,
-                            validatorFunc: validateInput,
-                            showPassFunc: () {
-                              signInController.showPassFunc();
-                            },
+                     Obx(() =>   getDefaultTextFiled(
+                         keyBoardType: TextInputType.visiblePassword,
+                         isBorder: false,
+                         text: "Passowrd",
+                         isGradient: false,
+                         controller: passController,
+                         showPass:signInController.showPass.value ,
+                         validatorFunc: validateInput,
+                         showPassFunc: () {
+                           signInController.showPassFunc();
+                           print(signInController.showPass.value);
+                         },
 
-                            sufixIcon: signInController.showPass
-                                ? Icons.visibility_off_outlined
-                                : Icons.remove_red_eye_outlined,
-                            inputType: TextInputType.name),
-
-                      ),
+                         sufixIcon: signInController.showPass.value
+                             ? Icons.visibility_off_outlined
+                             : Icons.remove_red_eye_outlined,
+                         inputType: TextInputType.name),),
 
 
                       SizedBox(
@@ -124,7 +122,6 @@ class SignIn extends GetView<CloudController> {
                           isShadow: true,
                           isGradinent: false,
                           function: () async {
-
                             if(!_formKey.currentState!.validate()){
                               _formKey.currentState!.save();
                             }else{
@@ -142,6 +139,7 @@ class SignIn extends GetView<CloudController> {
 
                                 }else{
                                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Un Successfully")));
+                                  break;
                                 }
                               }
                             }

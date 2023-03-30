@@ -87,23 +87,21 @@ class ForgetPass extends StatelessWidget {
                           ),
 
                           // New Pass Editing
-                          GetBuilder<ForgetPassController>(
-
-                            builder: (context)=>getDefaultTextFiled(
-                                keyBoardType: TextInputType.visiblePassword,
-                                isBorder: false,
-                                text: "New Passowrd",
-                                isGradient: true,
-                                controller:newPssEdit ,
-                                showPass:forgetController.showPass ,
-                                validatorFunc: validateInput,
-                                showPassFunc: () {
-                                  forgetController.showPassFunc();
-                                },
-                                sufixIcon: forgetController.showPass
-                                    ? Icons.visibility_off_outlined
-                                    : Icons.remove_red_eye_outlined,
-                                inputType: TextInputType.name),),
+                          Obx(() => getDefaultTextFiled(
+                              keyBoardType: TextInputType.visiblePassword,
+                              isBorder: false,
+                              text: "New Passowrd",
+                              isGradient: true,
+                              controller:newPssEdit ,
+                              showPass:forgetController.showPass.value ,
+                              validatorFunc: validateInput,
+                              showPassFunc: () {
+                                forgetController.showPassFunc();
+                              },
+                              sufixIcon: forgetController.showPass.value
+                                  ? Icons.visibility_off_outlined
+                                  : Icons.remove_red_eye_outlined,
+                              inputType: TextInputType.name),),
 
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.055,

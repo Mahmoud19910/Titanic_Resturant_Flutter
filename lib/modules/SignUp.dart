@@ -65,8 +65,8 @@ class SignUp extends GetView<CloudController> {
                       ),
                       Image.asset(
                         "assets/images/mainlogo.png",
-                        width: 170,
-                        height: 170,
+                        width: MediaQuery.of(context).size.width*1.95,
+                        height: MediaQuery.of(context).size.height*0.190,
                       ),
 
 
@@ -113,55 +113,51 @@ class SignUp extends GetView<CloudController> {
                       ),
 
                       // Passowrd Edit Text
-                      GetBuilder<SignUp_Controller>(
-                          builder: (context)=>getDefaultTextFiled(
-                                  keyBoardType: TextInputType.visiblePassword,
-                              isBorder: false,
-                              text: "Passowrd",
-                                  controller: passController,
-                                  showPass:signUpController.showPass ,
-                              isGradient: false,
-                              validatorFunc: validateInput,
-                                  showPassFunc: () {
-                                   signUpController.showPassFunc();
-                                  },
+                      Obx(() => getDefaultTextFiled(
+                          keyBoardType: TextInputType.visiblePassword,
+                          isBorder: false,
+                          text: "Passowrd",
+                          controller: passController,
+                          showPass:signUpController.showPass.value ,
+                          isGradient: false,
+                          validatorFunc: validateInput,
+                          showPassFunc: () {
+                            signUpController.showPassFunc();
+                          },
 
-                                  sufixIcon: signUpController.showPass
-                                      ? Icons.visibility_off_outlined
-                                      : Icons.remove_red_eye_outlined,
-                                  inputType: TextInputType.name),
-
-                      ),
+                          sufixIcon: signUpController.showPass.value
+                              ? Icons.visibility_off_outlined
+                              : Icons.remove_red_eye_outlined,
+                          inputType: TextInputType.name),),
 
 
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.015,
                       ),
 
-                      GetBuilder<SignUp_Controller>(
-                         builder: (context)=> Row(
-                           mainAxisAlignment: MainAxisAlignment.center,
-                           children: [
-                             getUnderLineText(
-                                 text:"Terms and Conditions" ,
-                                 fontSize: 16,
-                                 color: Colors.white,
-                                 setShadow: false,
-                                 fontWeight: FontWeight.w300),
-                             Checkbox(
-                               value: signUpController.isChecked,
-                               onChanged: (bool? value) {
-                                signUpController.isCheckedBox(value!);
-                               },
-                               activeColor: Colors.white,
-                               checkColor: Color.fromRGBO(112, 112, 112, 1),
-                               shape: RoundedRectangleBorder(
-                                   side: BorderSide(color: Colors.white),
-                                   borderRadius: BorderRadius.circular(5)
-                               ),
-                             ),
-                           ],
-                         ),),
+                      Obx(() => Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          getUnderLineText(
+                              text:"Terms and Conditions" ,
+                              fontSize: 16,
+                              color: Colors.white,
+                              setShadow: false,
+                              fontWeight: FontWeight.w300),
+                          Checkbox(
+                            value: signUpController.isChecked.value,
+                            onChanged: (bool? value) {
+                              signUpController.isCheckedBox(value!);
+                            },
+                            activeColor: Colors.white,
+                            checkColor: Color.fromRGBO(112, 112, 112, 1),
+                            shape: RoundedRectangleBorder(
+                                side: BorderSide(color: Colors.white),
+                                borderRadius: BorderRadius.circular(5)
+                            ),
+                          ),
+                        ],
+                      ),),
 
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.010,

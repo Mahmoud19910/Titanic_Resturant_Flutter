@@ -2,29 +2,24 @@ import 'package:get/get.dart';
 
 
 class NavigatorScreenController extends GetxController{
-  String titleBar="Home";
+  RxString titleBar="Home".obs;
 
   void onClickAccount(){
-    titleBar="My Account";
-    update();
+    titleBar.value="My Account";
   }
 
   void onClickSearch(){
-    titleBar="Search";
-    update();
+    titleBar.value="Search";
   }
 
   void onClickFavorite(){
-    titleBar="Favorite";
-    update();
+    titleBar.value="Favorite";
   }
 
   void onClickOrders(){
-    titleBar="Orders";
-    update();
+    titleBar.value="Orders";
   }
   void onClickHome(){
-    titleBar="Home";
-    update();
+    titleBar.value="Home";
   }
 }

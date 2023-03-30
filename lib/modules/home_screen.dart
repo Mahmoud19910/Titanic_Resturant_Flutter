@@ -45,24 +45,23 @@ class HomeScreen extends StatelessWidget {
                             child: VideoPlayer(homeController.controller)),
 
                         // Mute Sounds
-                        GetBuilder<HomeController>(
-                            builder: (context) => homeController.isMute
-                                ? InkWell(
-                                    onTap: () {
-                                      homeController.muteSounds();
-                                    },
-                                    child: Icon(
-                                      Icons.volume_off,
-                                      color: Colors.white,
-                                    ))
-                                : InkWell(
-                                    onTap: () {
-                                      homeController.muteSounds();
-                                    },
-                                    child: Icon(
-                                      Icons.volume_down_sharp,
-                                      color: Colors.white,
-                                    ))),
+                        Obx(() => homeController.isMute.value
+                            ? InkWell(
+                            onTap: () {
+                              homeController.muteSounds();
+                            },
+                            child: Icon(
+                              Icons.volume_off,
+                              color: Colors.white,
+                            ))
+                            : InkWell(
+                            onTap: () {
+                              homeController.muteSounds();
+                            },
+                            child: Icon(
+                              Icons.volume_down_sharp,
+                              color: Colors.white,
+                            ))),
                       ],
                     ),
                   ),

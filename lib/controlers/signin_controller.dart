@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 class SignIn_Controller extends GetxController{
 
 
-  bool showPass = true;
+  RxBool showPass =true.obs;
 
 @override
   void onInit() {
@@ -13,8 +13,11 @@ class SignIn_Controller extends GetxController{
   }
 
   void showPassFunc(){
-    showPass=!showPass;
-    update();
+   if(showPass==true){
+     showPass.value=false;
+   }else{
+     showPass.value=true;
+   }
   }
 
 }
