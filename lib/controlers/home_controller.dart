@@ -6,8 +6,8 @@ import 'package:video_player/video_player.dart';
 class HomeController extends GetxController{
 
   late final VideoPlayerController controller;
-  bool isPlaying = false;
-  bool isMute=false;
+  RxBool isPlaying = false.obs;
+  RxBool isMute=false.obs;
 
   late List<bool>boolFavorite=List.generate(100, (_) => false);
 
@@ -20,7 +20,7 @@ class HomeController extends GetxController{
     controller = VideoPlayerController.asset('assets/videos/story.mp4');
     controller.initialize().then((_) {
       controller.play();
-      isPlaying = true;
+      isPlaying.value = true;
       print("Initialize:  $isPlaying");
     });
     // Add listener to the video player controller to check when the video has completed playing
@@ -50,9 +50,9 @@ class HomeController extends GetxController{
 
   // كتم صوت الفيديو
   void muteSounds(){
-    isMute=!isMute;
+    isMute.value=!isMute.value;
     update();
-    if(isMute){
+    if(isMute.value){
       controller.setVolume(0);
     }else{
       controller.setVolume(1);

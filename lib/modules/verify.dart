@@ -15,8 +15,7 @@ class Verify extends GetView<CloudController> {
   String? phone;
   Verify({this.name,this.pass, this.phone});
 
-  var verifyController = Get.put(VerifyController());
-  var _form = GlobalKey<FormState>();
+
 
 
   @override
@@ -28,7 +27,7 @@ class Verify extends GetView<CloudController> {
         return false;
       },
       child: Form(
-        key: _form,
+        key: controller.form,
         child: Scaffold(
           body: SafeArea(
             child: Container(
@@ -102,7 +101,7 @@ class Verify extends GetView<CloudController> {
 
                           // عند انتهاء الوقت اخفاء المؤقت
                           GetBuilder<VerifyController>(
-                            builder: (context)=>verifyController.secounds==0?SizedBox()
+                            builder: (context)=>controller.verifyController.secounds==0?SizedBox()
                                 :  buildTimer(),
                           ),
 
@@ -119,7 +118,7 @@ class Verify extends GetView<CloudController> {
                             // focusedPinTheme: focusedPinTheme,
                             // // submittedPinTheme: submittedPinTheme,
                             onChanged: (value) {
-                              verifyController.onChageInput(value);
+                              controller.verifyController.onChageInput(value);
                             },
                             showCursor: true,
                             onCompleted: (pin) => print(pin),
@@ -129,16 +128,20 @@ class Verify extends GetView<CloudController> {
                             height: MediaQuery.of(context).size.height * 0.055,
                           ),
 
+                          Obx(() => Text(controller.name.value)),
 
-                          GetBuilder<VerifyController>(builder: (_)=> getDefaultButton(
+
+
+
+                          Obx(() => getDefaultButton(
                               text: "Verify",
                               textColor: Color.fromRGBO(112, 112, 112, 1),
                               isShadow: true,
                               isGradinent: true,
                               function: () async {
 
-                                PhoneNumber_Auth.verifyedCode(context, verifyController.smsCode);
-                                await controller.saveUsersInfo(PhoneNumber_Auth.uid!,name!, phone!, pass!, context);
+                                PhoneNumber_Auth.verifyedCode(context, controller.verifyController.smsCode.value);
+                                controller.saveUsersInfo(PhoneNumber_Auth.uid!,name!, phone!,pass!, context);
 
                               }),),
 
@@ -150,14 +153,14 @@ class Verify extends GetView<CloudController> {
 
                           // عند انتهاء المؤقت يتم عرض زر اعادة الارسال
                           GetBuilder<VerifyController>(
-                              builder: (context)=>verifyController.secounds==0?getDefaultButton(
+                              builder: (context)=>controller.verifyController.secounds==0?getDefaultButton(
                                   text: "Re Send",
                                   textColor: Color.fromRGBO(112, 112, 112, 1),
                                   isShadow: true,
                                   isGradinent: true,
                                   function: () {
-                                    verifyController.secounds=VerifyController.maxSecound;
-                                    verifyController.startTimer();
+                                    controller.verifyController.secounds=VerifyController.maxSecound;
+                                    controller.verifyController.startTimer();
                                   })
                                   : SizedBox(),
                           ),
@@ -187,11 +190,11 @@ class Verify extends GetView<CloudController> {
           fit: StackFit.expand,
           children: [
             CircularProgressIndicator(
-              value: verifyController.secounds/VerifyController.maxSecound,
+              value: controller.verifyController.secounds/VerifyController.maxSecound,
               strokeWidth: 6,
             ),
             Center(
-              child: Text('${verifyController.secounds}',
+              child: Text('${controller.verifyController.secounds}',
                 style: TextStyle(fontSize: 20, color: Colors.black,fontWeight: FontWeight.w700),),
             ),
           ],

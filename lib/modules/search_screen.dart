@@ -51,60 +51,60 @@ class SearchScreen extends StatelessWidget {
                     searchTextEditingController: editSearch,),
                 ),
 
-                GetBuilder<SearchController>(builder: (_)=> Container(
-                  height: MediaQuery.of(context).size.height - 56,
-                  width: double.infinity,
-                  padding: EdgeInsets.only(right: 10, left: 10,bottom: 80, top:10),
-                  child: StreamBuilder<List<SearchInMeals>>(
-                    stream: cloudController.getAllMealsByFirstChar(searchControoler.textChange!),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return ListView.separated(
-                            itemBuilder: (context , index)=>
-                                getFavoriteItemBuilder(
-                                    photoRadius: 50,
-                                    parentWidth: MediaQuery.of(context).size.width,
-                                    parentHeight: 63,
-                                    netWorkImage: snapshot.data!.elementAt(index).imageUrl,
-                                    mealsName: snapshot.data!.elementAt(index).name,
-                                    price: snapshot.data!.elementAt(index).id,
-                                    function: (){
+               Obx(() =>  Container(
+                 height: MediaQuery.of(context).size.height - 56,
+                 width: double.infinity,
+                 padding: EdgeInsets.only(right: 10, left: 10,bottom: 80, top:10),
+                 child: StreamBuilder<List<SearchInMeals>>(
+                   stream: cloudController.getAllMealsByFirstChar(searchControoler.textChange!.value),
+                   builder: (context, snapshot) {
+                     if (snapshot.hasData) {
+                       return ListView.separated(
+                           itemBuilder: (context , index)=>
+                               getFavoriteItemBuilder(
+                                   photoRadius: 50,
+                                   parentWidth: MediaQuery.of(context).size.width,
+                                   parentHeight: 63,
+                                   netWorkImage: snapshot.data!.elementAt(index).imageUrl,
+                                   mealsName: snapshot.data!.elementAt(index).name,
+                                   price: snapshot.data!.elementAt(index).id,
+                                   function: (){
 
-                                      print("ID :${snapshot.data!.elementAt(index).imageUrl}");
-                                    }),
-                            separatorBuilder: (context , index)=>SizedBox(height: 20,),
-                            itemCount: snapshot.data!.length);
+                                     print("ID :${snapshot.data!.elementAt(index).imageUrl}");
+                                   }),
+                           separatorBuilder: (context , index)=>SizedBox(height: 20,),
+                           itemCount: snapshot.data!.length);
 
-                      } else if (snapshot.connectionState ==
-                          ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
-                      } else if (snapshot.connectionState ==
-                          ConnectionState.none) {
-                        return Center(
-                          child: Column(
-                            children: [
-                              Icon(Icons.network_check),
-                              Text('Net Work Error!!')
-                            ],
-                          ),
-                        );
-                      } else if (snapshot.hasError || snapshot.data!.isEmpty) {
-                        return Center(child: Column(
-                          children: [
-                            Icon(Icons.wifi_tethering_error_sharp,size: 50,),
-                            Text("Not Found!!!!"),
-                          ],
-                        ));
-                      } if(snapshot==null){
-                        return Center(child: Text("Enter The First Charcter "),);
-                      }else {
-                        return Center(
-                          child: Text("Not Found!!"),
-                        );
-                      }
-                    },
-                  ),
-                ),),
+                     } else if (snapshot.connectionState ==
+                         ConnectionState.waiting) {
+                       return Center(child: CircularProgressIndicator());
+                     } else if (snapshot.connectionState ==
+                         ConnectionState.none) {
+                       return Center(
+                         child: Column(
+                           children: [
+                             Icon(Icons.network_check),
+                             Text('Net Work Error!!')
+                           ],
+                         ),
+                       );
+                     } else if (snapshot.hasError || snapshot.data!.isEmpty) {
+                       return Center(child: Column(
+                         children: [
+                           Icon(Icons.wifi_tethering_error_sharp,size: 50,),
+                           Text("Not Found!!!!"),
+                         ],
+                       ));
+                     } if(snapshot==null){
+                       return Center(child: Text("Enter The First Charcter "),);
+                     }else {
+                       return Center(
+                         child: Text("Not Found!!"),
+                       );
+                     }
+                   },
+                 ),
+               ),),
 
 
 
