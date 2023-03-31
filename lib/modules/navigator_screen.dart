@@ -231,115 +231,104 @@ class Home extends StatelessWidget {
             ),
           ),
           body: SafeArea(
-            child: SingleChildScrollView(
-              physics: NeverScrollableScrollPhysics(),
-              child: Column(
-                children: [
-                  Column(
-                    children: [
-                      Container(
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width,
-                        padding: EdgeInsets.only(bottom: 92.5),
-                        child: CurvedNavBar(
-                          actionButton: CurvedActionBar(
-                              onTab: (value) {
-                                /// perform action here
-                                print("Value print ${value.toString()}");
-                                navigatorController.onClickAccount();
-                              },
-                              activeIcon: Container(
-                                  width: 70,
-                                  height: 70,
-                                  padding: EdgeInsets.all(4),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Stack(
-                                    alignment: Alignment.center,
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.all(0),
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            gradient: LinearGradient(colors: [
-                                              Color.fromRGBO(242, 221, 128, 1),
-                                              Color.fromRGBO(199, 143, 64, 1)
-                                            ])),
-                                      ),
-                                      Image(
-                                        image: AssetImage(
-                                            "assets/images/account.png"),
-                                        height: 60,
-                                        width: 60,
-                                      )
-                                    ],
-                                  )),
-                              text: "Account"),
-                          activeColor: Colors.black,
-                          navBarBackgroundColor:
-                              Color.fromRGBO(227, 227, 227, 1),
-                          inActiveColor: Colors.black45,
-                          appBarItems: [
-                            FABBottomAppBarItem(
-                                activeIcon: Icon(
-                                  Icons.home_outlined,
-                                  color: Color.fromRGBO(240, 191, 108, 1),
-                                ),
-                                inActiveIcon: Icon(
-                                  Icons.home_outlined,
-                                  color: Colors.black26,
-                                ),
-                                text: "Home"),
-                            FABBottomAppBarItem(
-                                activeIcon: Icon(
-                                  Icons.wallet_giftcard,
-                                  color: Color.fromRGBO(240, 191, 108, 1),
-                                ),
-                                inActiveIcon: Icon(
-                                  Icons.wallet_giftcard,
-                                  color: Colors.black26,
-                                ),
-                                text: "Orders"),
-                            FABBottomAppBarItem(
-                                activeIcon: Icon(
-                                  Icons.favorite_border_outlined,
-                                  color: Color.fromRGBO(240, 191, 108, 1),
-                                ),
-                                inActiveIcon: Icon(
-                                  Icons.favorite_border_outlined,
-                                  color: Colors.black26,
-                                ),
-                                text: "Favorite"),
-                            FABBottomAppBarItem(
-                                activeIcon: Icon(
-                                  Icons.search,
-                                  color: Color.fromRGBO(240, 191, 108, 1),
-                                ),
-                                inActiveIcon: Icon(
-                                  Icons.search,
-                                  color: Colors.black26,
-                                ),
-                                text: "Search"),
-                          ],
-                          bodyItems: [
-                            HomeScreen(),
-                            OrdersScreen(),
-                            FavoriteScreen(),
-                            SearchScreen(),
-                          ],
-                          actionBarView: Container(
-                            width: double.infinity,
-                            height: MediaQuery.of(context).size.height,
-                            color: Colors.white,
-                            child: Center(child: Text("My Account")),
-                          ),
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+
+              child: CurvedNavBar(
+                actionButton: CurvedActionBar(
+                    onTab: (value) {
+                      /// perform action here
+                      print("Value print ${value.toString()}");
+                      navigatorController.onClickAccount();
+                    },
+                    activeIcon: Container(
+                        width: 70,
+                        height: 70,
+                        padding: EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
                         ),
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(0),
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  gradient: LinearGradient(colors: [
+                                    Color.fromRGBO(242, 221, 128, 1),
+                                    Color.fromRGBO(199, 143, 64, 1)
+                                  ])),
+                            ),
+                            Image(
+                              image: AssetImage(
+                                  "assets/images/account.png"),
+                              height: 60,
+                              width: 60,
+                            )
+                          ],
+                        )),
+                    text: "Account"),
+                activeColor: Colors.black,
+                navBarBackgroundColor:
+                Color.fromRGBO(227, 227, 227, 1),
+                inActiveColor: Colors.black45,
+                appBarItems: [
+                  FABBottomAppBarItem(
+                      activeIcon: Icon(
+                        Icons.home_outlined,
+                        color: Color.fromRGBO(240, 191, 108, 1),
                       ),
-                    ],
-                  ),
+                      inActiveIcon: Icon(
+                        Icons.home_outlined,
+                        color: Colors.black26,
+                      ),
+                      text: "Home"),
+                  FABBottomAppBarItem(
+                      activeIcon: Icon(
+                        Icons.wallet_giftcard,
+                        color: Color.fromRGBO(240, 191, 108, 1),
+                      ),
+                      inActiveIcon: Icon(
+                        Icons.wallet_giftcard,
+                        color: Colors.black26,
+                      ),
+                      text: "Orders"),
+                  FABBottomAppBarItem(
+                      activeIcon: Icon(
+                        Icons.favorite_border_outlined,
+                        color: Color.fromRGBO(240, 191, 108, 1),
+                      ),
+                      inActiveIcon: Icon(
+                        Icons.favorite_border_outlined,
+                        color: Colors.black26,
+                      ),
+                      text: "Favorite"),
+                  FABBottomAppBarItem(
+                      activeIcon: Icon(
+                        Icons.search,
+                        color: Color.fromRGBO(240, 191, 108, 1),
+                      ),
+                      inActiveIcon: Icon(
+                        Icons.search,
+                        color: Colors.black26,
+                      ),
+                      text: "Search"),
                 ],
+                bodyItems: [
+                  HomeScreen(),
+                  OrdersScreen(),
+                  FavoriteScreen(),
+                  SearchScreen(),
+                ],
+                actionBarView: Container(
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height,
+                  color: Colors.white,
+                  child: Center(child: Text("My Account")),
+                ),
               ),
             ),
           ),

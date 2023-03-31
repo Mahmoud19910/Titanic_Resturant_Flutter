@@ -25,7 +25,7 @@ class FavoriteScreen extends StatelessWidget{
         child: SingleChildScrollView(
           child: Column(
             children: [
-              
+
               // Tab Bar View
               Container(
                 height: MediaQuery.of(context).size.height - 56,
