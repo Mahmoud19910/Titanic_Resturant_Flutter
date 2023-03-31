@@ -27,6 +27,7 @@ class HomeScreen extends StatelessWidget {
           width: double.infinity,
           color: Colors.white,
           child: SingleChildScrollView(
+            physics: NeverScrollableScrollPhysics(),
             child: Column(
               children: [
 
@@ -69,15 +70,16 @@ class HomeScreen extends StatelessWidget {
 
                 // Tab Bar View
                 Container(
-                  height: MediaQuery.of(context).size.height - 256,
+                  height: MediaQuery.of(context).size.height - 200,
                   width: double.infinity,
                   child: StreamBuilder<List<Category>>(
                     stream: cloudController.getCategoryFromFireBaseStream(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         return Container(
-                          height: double.infinity,
+                          height: MediaQuery.of(context).size.height,
                           width: double.infinity,
+
                           child: InfiniteScrollTabView(
                             contentLength: snapshot.data!.length,
                             onTabTap: (index) {
@@ -110,7 +112,7 @@ class HomeScreen extends StatelessWidget {
                                   builder: (context , snapshot){
                                     if(snapshot.hasData){
                                       return Container(
-                                        padding: EdgeInsets.only(left: 10,right: 10,bottom: 120),
+                                        padding: EdgeInsets.only(left: 10,right: 10,bottom: 180),
                                         child:GridView.builder(
                                             itemCount:snapshot.data!.length,
                                             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
