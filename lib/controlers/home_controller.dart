@@ -17,23 +17,6 @@ class HomeController extends GetxController{
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    controller = VideoPlayerController.asset('assets/videos/story.mp4');
-    controller.initialize().then((_) {
-      controller.play();
-      isPlaying.value = true;
-      print("Initialize:  $isPlaying");
-    });
-    // Add listener to the video player controller to check when the video has completed playing
-    controller.addListener(() {
-      if (controller.value.isInitialized &&
-          !controller.value.isPlaying &&
-          controller.value.duration == controller.value.position) {
-        // Video has finished playing, replay it
-        controller.seekTo(Duration.zero);
-        controller.play();
-
-      }
-    });
 
   }
 
@@ -48,16 +31,7 @@ class HomeController extends GetxController{
 
   }
 
-  // كتم صوت الفيديو
-  void muteSounds(){
-    isMute.value=!isMute.value;
-    update();
-    if(isMute.value){
-      controller.setVolume(0);
-    }else{
-      controller.setVolume(1);
-    }
-  }
+
 
   // ميثود الاضاقة الى المفضلة
   void onClickAddToFavorite(int index ){

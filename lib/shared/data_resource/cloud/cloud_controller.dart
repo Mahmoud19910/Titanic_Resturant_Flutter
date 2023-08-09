@@ -17,7 +17,7 @@ class CloudController extends GetxController{
 
   FirebaseFirestore firestore= FirebaseFirestore.instance;
 
-  var verifyController = Get.find<VerifyController>();
+  var verifyController = Get.put(VerifyController());
   var form = GlobalKey<FormState>();
 
   RxString name = 'abed'.obs;
@@ -268,9 +268,6 @@ class CloudController extends GetxController{
       }
     });
   }
-
-
-
 
 
 

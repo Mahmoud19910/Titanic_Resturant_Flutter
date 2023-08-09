@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:floor/floor.dart';
 import 'package:resturantapp/modles/usersinfo.dart';
-import 'package:resturantapp/modles/usersinfo_dao.dart';
+import 'package:resturantapp/shared/data_resource/local_database/usersinfo_dao.dart';
 
 import 'dart:async';
 import 'package:sqflite/sqflite.dart' as sqflite;

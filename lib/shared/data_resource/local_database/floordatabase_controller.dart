@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:resturantapp/modles/usersinfo.dart';
-import 'package:resturantapp/modles/usersinfo_dao.dart';
 import 'package:resturantapp/shared/data_resource/local_database/database.dart';
+import 'package:resturantapp/shared/data_resource/local_database/usersinfo_dao.dart';
 
 class FloorDataBaseController extends GetxController{
 

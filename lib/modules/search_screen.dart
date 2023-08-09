@@ -11,7 +11,7 @@ import '../shared/componenets/componenet.dart';
 
 class SearchScreen extends StatelessWidget {
    SearchScreen({Key? key}) : super(key: key);
-   var searchControoler=Get.put(SearchController());
+   var searchControoler=Get.put(SearchControllers());
    var cloudController = Get.put(CloudController());
    TextEditingController editSearch=TextEditingController();
 

@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,6 +21,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    List<String> images = ["assets/images/imag1.jpg" , "assets/images/imag2.jpg" , "assets/images/imag3.jpg"];
     return SafeArea(
       child: Scaffold(
         body: Container(
@@ -32,45 +35,27 @@ class HomeScreen extends StatelessWidget {
               children: [
 
 
-                // Video Player
-                Container(
-                  height: 200,
-                  width: MediaQuery.of(context).size.width,
-                  child: FittedBox(
-                    fit: BoxFit.fitHeight,
-                    child: Stack(
-                      children: [
-                        SizedBox(
+                // Slider Images
+                CarouselSlider(
+                  options: CarouselOptions(height: MediaQuery.of(context).size.height * 0.25 , autoPlay: true ),
+                  items:images.map((i) {
+                    return Builder(
+                      builder: (BuildContext context) {
+                        return Container(
                             width: MediaQuery.of(context).size.width,
-                            height: 200,
-                            child: VideoPlayer(homeController.controller)),
-
-                        // Mute Sounds
-                        Obx(() => homeController.isMute.value
-                            ? InkWell(
-                            onTap: () {
-                              homeController.muteSounds();
-                            },
-                            child: Icon(
-                              Icons.volume_off,
-                              color: Colors.white,
-                            ))
-                            : InkWell(
-                            onTap: () {
-                              homeController.muteSounds();
-                            },
-                            child: Icon(
-                              Icons.volume_down_sharp,
-                              color: Colors.white,
-                            ))),
-                      ],
-                    ),
-                  ),
+                            margin: EdgeInsets.symmetric(horizontal: 5.0),
+                            decoration: BoxDecoration(
+                                color: Colors.amber
+                            ),
+                            child: Image.asset("${i}" , fit: BoxFit.fill,)
+                        );
+                      },
+                    );
+                  }).toList(),
                 ),
-
                 // Tab Bar View
                 Container(
-                  height: MediaQuery.of(context).size.height - 200,
+                  height: MediaQuery.of(context).size.height ,
                   width: double.infinity,
                   child: StreamBuilder<List<Category>>(
                     stream: cloudController.getCategoryFromFireBaseStream(),
@@ -112,7 +97,8 @@ class HomeScreen extends StatelessWidget {
                                   builder: (context , snapshot){
                                     if(snapshot.hasData){
                                       return Container(
-                                        padding: EdgeInsets.only(left: 10,right: 10,bottom: 180),
+                                        margin: EdgeInsets.only(bottom: 230),
+                                        padding: EdgeInsets.only(left: 10,right: 10,bottom: 120),
                                         child:GridView.builder(
                                             itemCount:snapshot.data!.length,
                                             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -124,7 +110,7 @@ class HomeScreen extends StatelessWidget {
                                             itemBuilder: (context, index){
                                               return  GetBuilder<HomeController>(
                                                   builder: (contex)=> Padding(
-                                                      padding: const EdgeInsets.only(bottom:5,top: 10),
+                                                      padding:   EdgeInsets.only(bottom:5,top: 5)  ,
                                                       child: (index%2==0)?
 
 
@@ -137,6 +123,9 @@ class HomeScreen extends StatelessWidget {
                                                           borderRadiusDirection: true,
                                                           addToFavorite: homeController.boolFavorite,
                                                           clickedItemIndex: index,
+                                                          onClickItem: (){
+                                                            Get.toNamed("/itemDetails");
+                                                          },
                                                           function: (){
                                                             homeController.onClickAddToFavorite(index);
                                                             cloudController.saveMealsToFavorite(snapshot.data!.elementAt(index));
@@ -152,6 +141,9 @@ class HomeScreen extends StatelessWidget {
                                                           borderRadiusDirection: false,
                                                           addToFavorite: homeController.boolFavorite,
                                                           clickedItemIndex: index,
+                                                          onClickItem: (){
+                                                            Get.toNamed("/itemDetails");
+                                                          },
                                                           function: (){
                                                             homeController.onClickAddToFavorite(index);
                                                             cloudController.saveMealsToFavorite(snapshot.data!.elementAt(index));

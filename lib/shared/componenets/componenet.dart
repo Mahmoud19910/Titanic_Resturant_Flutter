@@ -138,7 +138,7 @@ Widget getDefaultTextFiled(
 {
   required String text,
   required TextEditingController controller,
-  required IconData sufixIcon,
+   IconData? sufixIcon,
    bool showPass=false,
   required bool isGradient,
   required bool isBorder,
@@ -298,99 +298,192 @@ Widget getMealsItemBuilder
   bool borderRadiusDirection=true,
   List<bool>? addToFavorite,
   required Function() function,
+  required Function() onClickItem,
   int? clickedItemIndex,
 
 
 
-})=> Container(
-height: parentHeight,
-width: parentWidth,
-decoration: BoxDecoration(color: Colors.white,
-borderRadius: borderRadiusDirection ?BorderRadius.only(topLeft: Radius.circular(30), bottomRight: Radius.circular(30))
-:
-BorderRadius.only(topRight: Radius.circular(30), bottomLeft: Radius.circular(30)),
-boxShadow: [BoxShadow(color: Color.fromRGBO(0, 0, 0, 0.30),
-blurRadius: 6,
-offset: Offset(0, 6))
-]),
-child: Padding(padding: const EdgeInsets.all(5.0),
-child: Row( children: [
-// صورة الوجبة
-Container(decoration: BoxDecoration(shape: BoxShape.circle,
-boxShadow: [BoxShadow(color: Color.fromRGBO(0, 0, 0, 0.25),
-blurRadius: 6,
-offset: Offset(0, 3)),
-]),
-child: CircleAvatar(
-radius: photoRadius,
-// Image radius
-backgroundImage:
-NetworkImage(netWorkImage),
-),
-),
-// اسم الوجبة
-Expanded(
-child: Padding(
-padding: const EdgeInsets.only(right: 5.0 , left: 5.0),
-child: Column(mainAxisAlignment:MainAxisAlignment.center,
-children: [Text(mealsName,
-maxLines: 2,
-style: TextStyle(fontSize: 14,
-fontWeight: FontWeight.w500,
-overflow: TextOverflow.ellipsis,
-),
-),
-Text("₪$price",
-style: TextStyle(fontSize: 14,
-fontWeight: FontWeight.w500),
-),
-],
-),
-),
-),
-
-// الاضافة الى المفضلة
-InkWell(
-  onTap: function,
+})=> InkWell(
+  onTap: onClickItem,
   child:   Container(
-  width: 35,
-  height: 35,
-  decoration: BoxDecoration(shape: BoxShape.circle,
-  gradient: LinearGradient(
-  colors: [Color.fromRGBO(242, 221, 128, 1),
-  Color.fromRGBO(199, 143, 64, 1)
-  ]),
-  boxShadow: [BoxShadow(
-  color: Color.fromRGBO(0, 0, 0, 0.25),
+
+  height: parentHeight,
+
+  width: parentWidth,
+
+  decoration: BoxDecoration(color: Colors.white,
+
+  borderRadius: borderRadiusDirection ?BorderRadius.only(topLeft: Radius.circular(30), bottomRight: Radius.circular(30))
+
+  :
+
+  BorderRadius.only(topRight: Radius.circular(30), bottomLeft: Radius.circular(30)),
+
+  boxShadow: [BoxShadow(color: Color.fromRGBO(0, 0, 0, 0.30),
+
   blurRadius: 6,
-  offset: Offset(0, 3)),
+
+  offset: Offset(0, 6))
+
   ]),
-  child: Padding(padding: const EdgeInsets.all(3.0),
-  child: Container(width: 35,
-  height: 35,
-  decoration: BoxDecoration(
-  shape: BoxShape.circle,
-  color: Colors.white),
+
+  child: Padding(padding: const EdgeInsets.all(5.0),
+
+  child: Row( children: [
+
+  // صورة الوجبة
+
+  Container(decoration: BoxDecoration(shape: BoxShape.circle,
+
+  boxShadow: [BoxShadow(color: Color.fromRGBO(0, 0, 0, 0.25),
+
+  blurRadius: 6,
+
+  offset: Offset(0, 3)),
+
+  ]),
+
+  child: CircleAvatar(
+
+  radius: photoRadius,
+
+  // Image radius
+
+  backgroundImage:
+
+  NetworkImage(netWorkImage),
+
+  ),
+
+  ),
+
+  // اسم الوجبة
+
+  Expanded(
+
   child: Padding(
-  padding: const EdgeInsets.all(2.0),
-  child: Container(
-  width: 35,
-  height: 35,
-  decoration: BoxDecoration(shape: BoxShape.circle,
-  gradient: LinearGradient(
-  colors: [
-  Color.fromRGBO(242, 221, 128, 1),
-  Color.fromRGBO(199, 143, 64, 1)])),
-  child: (addToFavorite!.elementAt(clickedItemIndex!))? Icon(Icons.favorite_border_outlined, color: Colors.white,):Icon(Icons.favorite, color: Colors.white,),
+
+  padding: const EdgeInsets.only(right: 5.0 , left: 5.0),
+
+  child: Column(mainAxisAlignment:MainAxisAlignment.center,
+
+  children: [Text(mealsName,
+
+  maxLines: 2,
+
+  style: TextStyle(fontSize: 14,
+
+  fontWeight: FontWeight.w500,
+
+  overflow: TextOverflow.ellipsis,
+
   ),
+
   ),
+
+  Text("₪$price",
+
+  style: TextStyle(fontSize: 14,
+
+  fontWeight: FontWeight.w500),
+
   ),
+
+  ],
+
   ),
+
   ),
-),
-],
-),
-),
+
+  ),
+
+
+
+  // الاضافة الى المفضلة
+
+  InkWell(
+
+    onTap: function,
+
+    child:   Container(
+
+    width: 35,
+
+    height: 35,
+
+    decoration: BoxDecoration(shape: BoxShape.circle,
+
+    gradient: LinearGradient(
+
+    colors: [Color.fromRGBO(242, 221, 128, 1),
+
+    Color.fromRGBO(199, 143, 64, 1)
+
+    ]),
+
+    boxShadow: [BoxShadow(
+
+    color: Color.fromRGBO(0, 0, 0, 0.25),
+
+    blurRadius: 6,
+
+    offset: Offset(0, 3)),
+
+    ]),
+
+    child: Padding(padding: const EdgeInsets.all(3.0),
+
+    child: Container(width: 35,
+
+    height: 35,
+
+    decoration: BoxDecoration(
+
+    shape: BoxShape.circle,
+
+    color: Colors.white),
+
+    child: Padding(
+
+    padding: const EdgeInsets.all(2.0),
+
+    child: Container(
+
+    width: 35,
+
+    height: 35,
+
+    decoration: BoxDecoration(shape: BoxShape.circle,
+
+    gradient: LinearGradient(
+
+    colors: [
+
+    Color.fromRGBO(242, 221, 128, 1),
+
+    Color.fromRGBO(199, 143, 64, 1)])),
+
+    child: (addToFavorite!.elementAt(clickedItemIndex!))? Icon(Icons.favorite_border_outlined, color: Colors.white,):Icon(Icons.favorite, color: Colors.white,),
+
+    ),
+
+    ),
+
+    ),
+
+    ),
+
+    ),
+
+  ),
+
+  ],
+
+  ),
+
+  ),
+
+  ),
 );
 
 

@@ -163,6 +163,7 @@ class Home extends StatelessWidget {
       child: IgnorePointer(
         ignoring: isOpened,
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: AppBar(
             flexibleSpace: Container(
               decoration: BoxDecoration(

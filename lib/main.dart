@@ -8,6 +8,7 @@ import 'package:resturantapp/modles/PhoneNumber_Auth.dart';
 import 'package:resturantapp/modules/ForgetPass.dart';
 import 'package:resturantapp/modules/SignIn.dart';
 import 'package:resturantapp/modules/SignUp.dart';
+import 'package:resturantapp/modules/food_details.dart';
 import 'package:resturantapp/modules/navigator_screen.dart';
 import 'package:resturantapp/modules/splash.dart';
 import 'package:resturantapp/modules/verify.dart';
@@ -31,6 +32,7 @@ Future<void> main() async {
             GetPage(name: "/verify", page: ()=> Verify()),
             GetPage(name: '/home', page: ()=> Home()),
             GetPage(name: '/homeScreen', page: ()=> HomeScreen() , binding: DataBinding()),
+            GetPage(name: '/itemDetails', page: ()=> FoodDetails() , binding: DataBinding()),
 
 
           ],
