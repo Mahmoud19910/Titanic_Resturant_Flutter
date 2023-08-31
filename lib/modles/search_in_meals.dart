@@ -1,15 +1,15 @@
 class SearchInMeals{
-  late String id;
-  late String name;
-  late String imageUrl;
+  late String idMeals;
+  late String nameMeals;
+  late String imageUrlMeals;
 
-  SearchInMeals({required this.id, required this.name, required this.imageUrl});
+  SearchInMeals({required this.idMeals, required this.nameMeals, required this.imageUrlMeals});
 
   factory SearchInMeals.fromJson(Map<String, dynamic> json) {
     return SearchInMeals(
-      id: json['idMeal'],
-      name: json['strMeal'],
-      imageUrl: json['strMealThumb'],
+      idMeals: json['idMeal'],
+      nameMeals: json['strMeal'],
+      imageUrlMeals: json['strMealThumb'],
     );
   }
 }

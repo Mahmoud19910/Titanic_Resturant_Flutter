@@ -8,6 +8,7 @@ import 'package:resturantapp/modles/PhoneNumber_Auth.dart';
 import 'package:resturantapp/modules/ForgetPass.dart';
 import 'package:resturantapp/modules/SignIn.dart';
 import 'package:resturantapp/modules/SignUp.dart';
+import 'package:resturantapp/modules/family_section.dart';
 import 'package:resturantapp/modules/food_details.dart';
 import 'package:resturantapp/modules/navigator_screen.dart';
 import 'package:resturantapp/modules/splash.dart';
@@ -22,9 +23,10 @@ Future<void> main() async {
   await Firebase.initializeApp();
   runApp(
       GetMaterialApp(
-        initialRoute: '/splash',
+        initialRoute: '/home',
           getPages: [
-            GetPage(name: '/splash', page: ()=>Splash()),
+            GetPage(name: '/splash', page: ()=>Splash() , binding: DataBinding()),
+            GetPage(name: "/family", page: ()=>FamilySection(), binding: DataBinding()),
             GetPage(name: "/unboarding", page: () => UnBoarding()),
             GetPage(name: "/signup", page: ()=>SignUp() , binding:DataBinding()),
             GetPage(name: "/signIn", page:()=>SignIn() , binding: DataBinding()),

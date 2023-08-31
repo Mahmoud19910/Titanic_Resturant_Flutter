@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:resturantapp/modles/meals.dart';
 
 Row getIndicatorShap(int index){
   index=index+1;
@@ -296,7 +297,7 @@ Widget getMealsItemBuilder
   required String mealsName,
   required String price,
   bool borderRadiusDirection=true,
-  List<bool>? addToFavorite,
+  Meals? addToFavorite,
   required Function() function,
   required Function() onClickItem,
   int? clickedItemIndex,
@@ -463,7 +464,7 @@ Widget getMealsItemBuilder
 
     Color.fromRGBO(199, 143, 64, 1)])),
 
-    child: (addToFavorite!.elementAt(clickedItemIndex!))? Icon(Icons.favorite_border_outlined, color: Colors.white,):Icon(Icons.favorite, color: Colors.white,),
+    child: (addToFavorite!.isAddTofav==true)? Icon(Icons.favorite_border_outlined, color: Colors.white,):Icon(Icons.favorite, color: Colors.white,),
 
     ),
 
@@ -582,6 +583,144 @@ Widget getFavoriteItemBuilder
           ),
         ),
       ),
+    ],
+    ),
+  ),
+);
+
+
+
+Widget getSearch
+    ({
+  required double parentWidth,
+  required double parentHeight,
+  double photoRadius=25,
+  required String netWorkImage,
+  required String mealsName,
+  required String price,
+  bool borderRadiusDirection=true,
+
+  required Function() function,
+  int? clickedItemIndex,
+
+
+
+})=> Container(
+  height: parentHeight,
+  width: parentWidth,
+  decoration: BoxDecoration(color: Colors.white,
+      borderRadius: borderRadiusDirection ?BorderRadius.only(topLeft: Radius.circular(30), bottomRight: Radius.circular(30))
+          :
+      BorderRadius.only(topRight: Radius.circular(30), bottomLeft: Radius.circular(30)),
+      boxShadow: [BoxShadow(color: Color.fromRGBO(0, 0, 0, 0.30),
+          blurRadius: 6,
+          offset: Offset(0, 6))
+      ]),
+  child: Padding(padding: const EdgeInsets.all(5.0),
+    child: Row( children: [
+// صورة الوجبة
+      Container(decoration: BoxDecoration(shape: BoxShape.circle,
+          boxShadow: [BoxShadow(color: Color.fromRGBO(0, 0, 0, 0.25),
+              blurRadius: 6,
+              offset: Offset(0, 3)),
+          ]),
+        child: CircleAvatar(
+          radius: photoRadius,
+// Image radius
+          backgroundImage:
+          NetworkImage(netWorkImage),
+        ),
+      ),
+// اسم الوجبة
+      Expanded(
+        child: Padding(
+          padding: const EdgeInsets.only(right: 5.0 , left: 5.0),
+          child: Column(mainAxisAlignment:MainAxisAlignment.center,
+            children: [Text(mealsName,
+              maxLines: 2,
+              style: TextStyle(fontSize: 14,
+                fontWeight: FontWeight.w500,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+              Text("₪$price",
+                style: TextStyle(fontSize: 14,
+                    fontWeight: FontWeight.w500),
+              ),
+            ],
+          ),
+        ),
+      ),
+
+    ],
+    ),
+  ),
+);
+
+
+
+Widget getOrderitems
+    ({
+  required double parentWidth,
+  required double parentHeight,
+  double photoRadius=25,
+  required String netWorkImage,
+  required String mealsName,
+  required String price,
+  bool borderRadiusDirection=true,
+
+  required Function() function,
+  int? clickedItemIndex,
+
+
+
+})=> Container(
+  height: parentHeight,
+  width: parentWidth,
+  decoration: BoxDecoration(color: Colors.white,
+      borderRadius: borderRadiusDirection ?BorderRadius.only(topLeft: Radius.circular(30), bottomRight: Radius.circular(30))
+          :
+      BorderRadius.only(topRight: Radius.circular(30), bottomLeft: Radius.circular(30)),
+      boxShadow: [BoxShadow(color: Color.fromRGBO(0, 0, 0, 0.30),
+          blurRadius: 6,
+          offset: Offset(0, 6))
+      ]),
+  child: Padding(padding: const EdgeInsets.all(5.0),
+    child: Row( children: [
+// صورة الوجبة
+      Container(decoration: BoxDecoration(shape: BoxShape.circle,
+          boxShadow: [BoxShadow(color: Color.fromRGBO(0, 0, 0, 0.25),
+              blurRadius: 6,
+              offset: Offset(0, 3)),
+          ]),
+        child: CircleAvatar(
+          radius: photoRadius,
+// Image radius
+          backgroundImage:
+          NetworkImage(netWorkImage),
+        ),
+      ),
+// اسم الوجبة
+      Expanded(
+        child: Padding(
+          padding: const EdgeInsets.only(right: 5.0 , left: 5.0),
+          child: Column(mainAxisAlignment:MainAxisAlignment.center,
+            children: [Text(mealsName,
+              maxLines: 2,
+              style: TextStyle(fontSize: 14,
+                fontWeight: FontWeight.w500,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+              Text("₪$price",
+                style: TextStyle(fontSize: 14,
+                    fontWeight: FontWeight.w500),
+              ),
+            ],
+          ),
+        ),
+      ),
+
     ],
     ),
   ),

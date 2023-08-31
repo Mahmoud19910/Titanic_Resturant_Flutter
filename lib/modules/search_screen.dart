@@ -61,17 +61,23 @@ class SearchScreen extends StatelessWidget {
                      if (snapshot.hasData) {
                        return ListView.separated(
                            itemBuilder: (context , index)=>
-                               getFavoriteItemBuilder(
-                                   photoRadius: 50,
-                                   parentWidth: MediaQuery.of(context).size.width,
-                                   parentHeight: 63,
-                                   netWorkImage: snapshot.data!.elementAt(index).imageUrl,
-                                   mealsName: snapshot.data!.elementAt(index).name,
-                                   price: snapshot.data!.elementAt(index).id,
-                                   function: (){
+                               InkWell(
+                                 onTap: (){
+                                   Get.toNamed("/itemDetails", arguments: (snapshot.data!.elementAt(index)));
 
-                                     print("ID :${snapshot.data!.elementAt(index).imageUrl}");
-                                   }),
+                                 },
+                                 child: getSearch(
+                                     photoRadius: 50,
+                                     parentWidth: MediaQuery.of(context).size.width,
+                                     parentHeight: 63,
+                                     netWorkImage: snapshot.data!.elementAt(index).imageUrlMeals,
+                                     mealsName: snapshot.data!.elementAt(index).nameMeals,
+                                     price: snapshot.data!.elementAt(index).idMeals,
+                                     function: (){
+
+                                       print("ID :${snapshot.data!.elementAt(index).imageUrlMeals}");
+                                     }),
+                               ),
                            separatorBuilder: (context , index)=>SizedBox(height: 20,),
                            itemCount: snapshot.data!.length);
 

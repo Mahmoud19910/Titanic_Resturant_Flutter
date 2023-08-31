@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_tab_view/infinite_scroll_tab_view.dart';
 import 'package:resturantapp/modles/category.dart';
 import 'package:resturantapp/modles/meals.dart';
+import 'package:resturantapp/modles/search_in_meals.dart';
 import 'package:resturantapp/shared/data_resource/cloud/cloud_controller.dart';
 import 'package:video_player/video_player.dart';
 import '../controlers/home_controller.dart';
@@ -57,8 +58,8 @@ class HomeScreen extends StatelessWidget {
                 Container(
                   height: MediaQuery.of(context).size.height ,
                   width: double.infinity,
-                  child: StreamBuilder<List<Category>>(
-                    stream: cloudController.getCategoryFromFireBaseStream(),
+                  child: FutureBuilder<List<Category>>(
+                    future: cloudController.getAllCategory(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         return Container(
@@ -71,6 +72,7 @@ class HomeScreen extends StatelessWidget {
                               debugPrint('tapped $index');
                             },
                             tabBuilder: (index, isSelected) {
+
                               nameCategory=snapshot.data!.elementAt(index).nameCategory;
 
                               return Text(
@@ -86,8 +88,9 @@ class HomeScreen extends StatelessWidget {
                             separator: BorderSide(color: Colors.black12, width: 2.0),
                             onPageChanged: (index) {
                               print("Index  :$index");
+                              tempNameCategory = snapshot.data!.elementAt(index).nameCategory;
                               //Tab Buttonعند الضغط على  Fire Base حفظ وجبات الطعام في
-                              cloudController.saveMealsCategory(snapshot.data!.elementAt(index).nameCategory);
+                              // cloudController.saveMealsCategory(snapshot.data!.elementAt(index).nameCategory);
 
                             },
                             indicatorColor: Color.fromRGBO(237, 48, 48, 1),
@@ -121,14 +124,22 @@ class HomeScreen extends StatelessWidget {
                                                           mealsName: snapshot.data!.elementAt(index).nameMeals,
                                                           price: snapshot.data!.elementAt(index).idMeals,
                                                           borderRadiusDirection: true,
-                                                          addToFavorite: homeController.boolFavorite,
+                                                          addToFavorite: snapshot.data!.elementAt(index),
                                                           clickedItemIndex: index,
                                                           onClickItem: (){
-                                                            Get.toNamed("/itemDetails");
+                                                            Get.toNamed("/itemDetails", arguments: (snapshot.data!.elementAt(index)));
                                                           },
-                                                          function: (){
-                                                            homeController.onClickAddToFavorite(index);
-                                                            cloudController.saveMealsToFavorite(snapshot.data!.elementAt(index));
+                                                          function: () async {
+
+                                                             cloudController.updateDocument(tempNameCategory! , snapshot.data!.elementAt(index).idMeals , snapshot.data!.elementAt(index));
+                                                            print("favoriye item : ${snapshot.data!.elementAt(index).isAddTofav} the name ${snapshot.data!.elementAt(index).nameMeals}");
+                                                            // homeController.onClickAddToFavorite(index);
+                                                             if(!snapshot.data!.elementAt(index).isAddTofav){
+                                                               cloudController.saveMealsToFavorite(snapshot.data!.elementAt(index));
+
+                                                             }else{
+                                                               await cloudController.deleteFavoriteMealFromFirebaseByName(snapshot.data!.elementAt(index).idMeals);
+                                                             }
 
                                                           })
                                                           :
@@ -139,15 +150,19 @@ class HomeScreen extends StatelessWidget {
                                                           mealsName: snapshot.data!.elementAt(index).nameMeals,
                                                           price: snapshot.data!.elementAt(index).idMeals,
                                                           borderRadiusDirection: false,
-                                                          addToFavorite: homeController.boolFavorite,
+                                                          addToFavorite: snapshot.data!.elementAt(index),
                                                           clickedItemIndex: index,
                                                           onClickItem: (){
-                                                            Get.toNamed("/itemDetails");
+                                                            Get.toNamed("/itemDetails" , arguments: (snapshot.data!.elementAt(index)));
                                                           },
-                                                          function: (){
-                                                            homeController.onClickAddToFavorite(index);
-                                                            cloudController.saveMealsToFavorite(snapshot.data!.elementAt(index));
+                                                          function: () async{
+                                                            cloudController.updateDocument(tempNameCategory! , snapshot.data!.elementAt(index).idMeals , snapshot.data!.elementAt(index));
+                                                            if(!snapshot.data!.elementAt(index).isAddTofav){
+                                                              cloudController.saveMealsToFavorite(snapshot.data!.elementAt(index));
 
+                                                            }else{
+                                                              await cloudController.deleteFavoriteMealFromFirebaseByName(snapshot.data!.elementAt(index).idMeals);
+                                                            }
                                                           })
 
                                                   ),);
@@ -166,11 +181,11 @@ class HomeScreen extends StatelessWidget {
                                         ),
                                       );
                                     } else if (snapshot.hasError || snapshot.data!.isEmpty) {
+                                      print("The error" +snapshot.error.toString());
                                       return Center(child: Text("Error!!"));
                                     } else {
-                                      return Center(
-                                        child: Text("Not Found!!"),
-                                      );
+                                    print("null 2");
+                                    return Center(child: Image.asset("assets/images/notfound.jpg"));
                                     }
                                   });
 

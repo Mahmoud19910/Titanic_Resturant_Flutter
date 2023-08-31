@@ -34,7 +34,7 @@ class FavoriteScreen extends StatelessWidget{
                 child: StreamBuilder<List<Favorite>>(
                   stream: cloudController.getFavoriteMealsStreamFromFirebase(),
                   builder: (context, snapshot) {
-                    if (snapshot.hasData) {
+                    if (snapshot.hasData && snapshot.data!.length>0) {
                       return ListView.separated(
                           itemBuilder: (context , index)=>
                           getFavoriteItemBuilder(
@@ -64,12 +64,9 @@ class FavoriteScreen extends StatelessWidget{
                           ],
                         ),
                       );
-                    } else if (snapshot.hasError || snapshot.data!.isEmpty) {
-                      return Center(child: Text("Error!!"));
                     } else {
-                      return Center(
-                        child: Text("Not Found!!"),
-                      );
+                      print("null 2");
+                      return Center(child: Image.asset("assets/images/notfound.jpg"));
                     }
                   },
                 ),

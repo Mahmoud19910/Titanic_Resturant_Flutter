@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:resturantapp/controlers/verify_controller.dart';
 import 'package:resturantapp/modles/favorite.dart';
 import 'package:resturantapp/modles/meals.dart';
+import 'package:resturantapp/modles/orders.dart';
 import 'package:resturantapp/modles/search_in_meals.dart';
 
 import '../../../modles/category.dart';
@@ -61,7 +62,8 @@ class CloudController extends GetxController{
     final response = await http.get(Uri.parse('https://www.themealdb.com/api/json/v1/1/categories.php'));
     if (response.statusCode == 200) {
       final List<dynamic> jsonList = json.decode(response.body)['categories'];
-      final categoryList = jsonList.map((json) => Category.fromJson(json)).toList();
+      var categoryList = jsonList.map((json) => Category.fromJson(json)).toList();
+
       return categoryList;
     } else {
       return [];
@@ -138,34 +140,55 @@ class CloudController extends GetxController{
 
 
   //Fire Base حفظ جميع الأطعمة من عن طريق تمرير اسم القسم من
-  void saveMealsCategory(String categoryName) async {
-    List<Meals> listMeals = await getAllMealCategory(categoryName);
-    Stream<List<Meals>> mealsStream = getMealsFromFireBaseStream(categoryName);
-    mealsStream.listen((listFireBase) {
-      try {
-        for (Meals mealsApi in listMeals) {
-          bool isFound = false;
-          for (Meals mealsFireBase in listFireBase) {
-            if (mealsApi.idMeals == mealsFireBase.idMeals) {
-              isFound = true;
-              break;
-            }
-          }
+  // void saveMealsCategory(String categoryName) async {
+  //   List<Meals> listMeals = await getAllMealCategory(categoryName);
+  //   Stream<List<Meals>> mealsStream = getMealsFromFireBaseStream(categoryName);
+  //   mealsStream.listen((listFireBase) {
+  //     try {
+  //       for (Meals mealsApi in listMeals) {
+  //         bool isFound = false;
+  //         for (Meals mealsFireBase in listFireBase) {
+  //           if (mealsApi.idMeals == mealsFireBase.idMeals) {
+  //             isFound = true;
+  //             break;
+  //           }
+  //         }
+  //
+  //         if (!isFound) {
+  //           Map<String, dynamic> map = {
+  //             "id": mealsApi.idMeals,
+  //             "nameMeals": mealsApi.nameMeals,
+  //             "imageMeals": mealsApi.imageUrlMeals,
+  //           };
+  //           firestore.collection(categoryName).add(map);
+  //         }
+  //       }
+  //     } catch (e) {
+  //       print(e.toString());
+  //     }
+  //   });
+  // }
 
-          if (!isFound) {
-            Map<String, dynamic> map = {
-              "id": mealsApi.idMeals,
-              "nameMeals": mealsApi.nameMeals,
-              "imageMeals": mealsApi.imageUrlMeals,
-            };
-            firestore.collection(categoryName).add(map);
-          }
-        }
-      } catch (e) {
-        print(e.toString());
-      }
-    });
-  }
+  //Fire Base حفظ جميع الأطعمة من عن طريق تمرير اسم القسم من
+  // void saveMealsCategory(String categoryName) async {
+  //   List<Meals> listMeals = await getAllMealCategory(categoryName);
+  //     try {
+  //       for (Meals mealsApi in listMeals) {
+  //
+  //           Map<String, dynamic> map = {
+  //             "id": mealsApi.idMeals,
+  //             "nameMeals": mealsApi.nameMeals,
+  //             "imageMeals": mealsApi.imageUrlMeals,
+  //             "isAddTofav": false,
+  //           };
+  //           firestore.collection(categoryName).doc(mealsApi.idMeals).set(map);
+  //
+  //       }
+  //     } catch (e) {
+  //       print(e.toString());
+  //     }
+  //
+  // }
   // Fire Base اضافة الى المفضلة في
   void saveMealsToFavorite(Meals meals) async {
     // Check if the meals object already exists in Firebase
@@ -184,6 +207,7 @@ class CloudController extends GetxController{
       "id": meals.idMeals,
       "nameMeals": meals.nameMeals,
       "imageUrlMeals": meals.imageUrlMeals,
+      "isAddTofav": meals.isAddTofav
     };
     await firestore.collection("Favorite").doc().set(mapFavorite);
   }
@@ -232,7 +256,9 @@ class CloudController extends GetxController{
         String id = mapMeals['id'];
         String name = mapMeals['nameMeals'];
         String image = mapMeals['imageMeals'];
-        listMeals.add(Meals(idMeals: id, nameMeals: name, imageUrlMeals: image));
+        bool addToFav = mapMeals['isAddTofav'];
+
+        listMeals.add(Meals(idMeals: id, nameMeals: name, imageUrlMeals: image , isAddTofav: addToFav));
       });
 
       return listMeals;
@@ -250,17 +276,19 @@ class CloudController extends GetxController{
       String id = mapMeals['id'];
       String imageUrlMeals = mapMeals['imageUrlMeals'];
       String nameMeals = mapMeals['nameMeals'];
+      bool addToFav = mapMeals['isAddTofav'];
+
       Meals meals =
-      Meals(idMeals: id, nameMeals: nameMeals, imageUrlMeals: imageUrlMeals);
+      Meals(idMeals: id, nameMeals: nameMeals, imageUrlMeals: imageUrlMeals , isAddTofav:addToFav );
       Favorite favorite = Favorite(meals);
       return favorite;
     })
         .toList());
   }
 
-  Future<void> deleteFavoriteMealFromFirebaseByName(String name) async {
+  Future<void> deleteFavoriteMealFromFirebaseByName(String id) async {
     QuerySnapshot querySnapshot =
-    await FirebaseFirestore.instance.collection('Favorite').where('id', isEqualTo: name).get();
+    await FirebaseFirestore.instance.collection('Favorite').where('id', isEqualTo: id).get();
 
     querySnapshot.docs.forEach((documentSnapshot) async {
       if (documentSnapshot.exists) {
@@ -268,6 +296,99 @@ class CloudController extends GetxController{
       }
     });
   }
+
+  void updateDocument(String collectionName, String documentName , Meals meals) async {
+    try {
+      // Get a reference to the document
+      print("document Name :   ${collectionName}");
+      DocumentReference docRef = firestore.collection(collectionName).doc(documentName);
+
+      // Update the fields
+
+      if(meals.isAddTofav){
+        await docRef.update({
+          "isAddTofav": false,
+        });
+      }else{
+        await docRef.update({
+          "isAddTofav": true,
+        });
+      }
+
+
+
+
+
+      print("Document updated successfully");
+    } catch (e) {
+      print("Error updating document: ${e.toString()}");
+    }
+  }
+
+
+  void newOrder(OrdersItem ordersItem) async{
+
+    try{
+      Map<String , dynamic> ordersMap = {
+        "id":ordersItem.id,
+        "userId":ordersItem.userId,
+        "foodName":ordersItem.foodName,
+        "totalPrice": ordersItem.totalPrice,
+        "numberOffood":ordersItem.numberOffood,
+        "notes":ordersItem.notes,
+        "order_status":ordersItem.orderStatus,
+        "order_time":ordersItem.orderTime,
+        "imageUrl":ordersItem.imageUrl
+      };
+      await firestore.collection("Orders").doc().set(ordersMap);
+    }catch(e){
+      print("The Error ${e.toString()}");
+    }
+
+  }
+
+  Stream<List<OrdersItem>> getOrders(String statusOrder, String date) {
+    return FirebaseFirestore.instance
+        .collection('Orders')
+        .snapshots()
+        .map((QuerySnapshot querySnapshot) => querySnapshot.docs
+        .map((DocumentSnapshot documentSnapshot) {
+      Map<String, dynamic> orderMeals = documentSnapshot.data() as Map<String, dynamic>;
+      String id = orderMeals['id'];
+      String userId = orderMeals['userId'];
+      String imageUrl = orderMeals['imageUrl'];
+      String foodName = orderMeals['foodName'];
+      String totalPrice = orderMeals['totalPrice'];
+      String numberOffood = orderMeals['numberOffood'];
+      String notes = orderMeals['notes'];
+      String order_status = orderMeals['order_status'];
+      String order_time = orderMeals['order_time'];
+      OrdersItem ordersItem= OrdersItem(
+        id: id,
+        userId: userId,
+        imageUrl: imageUrl,
+        foodName: foodName,
+        totalPrice: totalPrice,
+        numberOffood: numberOffood,
+        notes: notes,
+        orderStatus: order_status,
+        orderTime: order_time,
+      );
+      return ordersItem;
+    })
+        .toList());
+  }
+
+  Future<void> deleteOrder(String id)async{
+    QuerySnapshot querySnapshot = await firestore.collection("Orders").where("id" , isEqualTo: id).get();
+
+    querySnapshot.docs.forEach((element) async{
+      if(element.exists){
+        await element.reference.delete();
+      }
+    });
+  }
+
 
 
 

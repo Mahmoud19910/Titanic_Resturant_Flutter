@@ -8,6 +8,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:resturantapp/controlers/vavigatorscreen_controller.dart';
 import 'package:resturantapp/modles/usersinfo.dart';
 import 'package:resturantapp/modules/SignIn.dart';
+import 'package:resturantapp/modules/profile_screen.dart';
 import 'package:resturantapp/modules/search_screen.dart';
 import 'package:resturantapp/shared/componenets/componenet.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
@@ -51,12 +52,12 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return SideMenu(
       key: _endSideMenuKey,
-      inverse: true,
+      inverse: false,
       // end side menu
       background: Colors.white60,
       type: SideMenuType.slideNRotate,
       menu: Padding(
-        padding: const EdgeInsets.only(left: 1.0),
+        padding: const EdgeInsets.only(right: 1.0),
         child: SingleChildScrollView(
           physics: NeverScrollableScrollPhysics(),
           child: Column(
@@ -72,7 +73,7 @@ class Home extends StatelessWidget {
                           Color.fromRGBO(242, 221, 128, 1),
                           Color.fromRGBO(199, 143, 64, 1)
                         ]),
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(20))),
+                borderRadius: BorderRadius.only(topRight: Radius.circular(20))),
                 child: Image.asset(
                   'assets/images/mainlogo.png',
                 ),
@@ -82,53 +83,97 @@ class Home extends StatelessWidget {
                 height: MediaQuery.of(context).size.height-226,
               color: Colors.white60,
               child: Padding(
-                padding: const EdgeInsets.only(right: 15),
+                padding: const EdgeInsets.only(left: 15),
                 child: Column(children: [
                   SizedBox(height: 20,),
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                    getDefaultText(text: "Orders",
-                        fontSize: 18,
-                        color: Colors.black,
-                        setShadow: true,
-                        fontWeight: FontWeight.w500),
-                    SizedBox(width: 20,),
-                    Icon(Icons.list_alt_sharp),
+                  InkWell(
+                    onTap: (){
+                      if(navigatorController.isClickedOrder.value==true){
+                        print("the value  =  ${navigatorController.isClickedOrder.value}");
+                        navigatorController.changeStatusOnClickTheOrders(false);
+                      }else{
+                        print("the value  =  ${navigatorController.isClickedOrder.value}");
 
-                  ],),
+                        navigatorController.changeStatusOnClickTheOrders(true);
+                      }
+                    },
+                    child: Obx(()=>Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          RotatedBox(quarterTurns: navigatorController.isClickedOrder.value ? 3 : 6, child:   Icon(Icons.arrow_back_ios_new),)
+                          ,Icon(Icons.list_alt_sharp),
+                          SizedBox(width: 20,),
+                          getDefaultText(text: "Orders",
+                              fontSize: 18,
+                              color: Colors.black,
+                              setShadow: true,
+                              fontWeight: FontWeight.w500),
+                        ],),
+                    ),
+                  ),
+
+                  Obx( ()=>Container(
+                      height: navigatorController.isClickedOrder.value ? 112 : 0,
+                      child:Column(
+                          children: [
+                            RadioListTile(
+                                title:Text("Families section"),
+                                value:"family" ,
+                                groupValue: navigatorController.valueRadioOrders.value,
+                                onChanged: (value){
+                                  navigatorController.onChangeRadioOrders(value.toString());
+                                  Get.offAllNamed("/family");
+                                }),
+
+                            RadioListTile(
+                                title:Text("Youth section"),
+                                value:"Youth",
+                                groupValue: navigatorController.valueRadioOrders.value,
+                                onChanged: (value){
+                                  navigatorController.onChangeRadioOrders(value.toString());
+                                }),
+                          ],
+                        ),
+
+                    ),
+                  ),
+
                   SizedBox(height: 20,),
 
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.start,
 
                     children: [
-                    getDefaultText(text: "Settings",
-                        fontSize: 18,
-                        color: Colors.black,
-                        setShadow: true,
-                        fontWeight: FontWeight.w500),
-                      SizedBox(width: 20,),
-
                       Icon(Icons.settings),
-                  ],),
-                  SizedBox(height: 20,),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-
-                    children: [
-                      getDefaultText(text: "About",
+                      SizedBox(width: 20,),
+                      getDefaultText(text: "Settings",
                           fontSize: 18,
                           color: Colors.black,
                           setShadow: true,
                           fontWeight: FontWeight.w500),
-                      SizedBox(width: 20,),
-
-                      Icon(Icons.app_settings_alt_rounded),
-
                   ],),
+                  SizedBox(height: 20,),
+
+                  InkWell(
+                    onTap: (){
+
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+
+                      children: [
+                        Icon(Icons.app_settings_alt_rounded),
+                        SizedBox(width: 20,),
+                        getDefaultText(text: "About",
+                            fontSize: 18,
+                            color: Colors.black,
+                            setShadow: true,
+                            fontWeight: FontWeight.w500),
+
+
+                      ],),
+                  ),
                   SizedBox(height: 20,),
 
                   InkWell(
@@ -137,17 +182,15 @@ class Home extends StatelessWidget {
                       Get.offAllNamed("/signIn");
                     },
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-
-                      getDefaultText(text: "Log Out",
-                          fontSize: 18,
-                          color: Colors.black,
-                          setShadow: true,
-                          fontWeight: FontWeight.w500),
-                        SizedBox(width: 20,),
-
                         Icon(Icons.login_sharp),
+                        SizedBox(width: 20,),
+                        getDefaultText(text: "Log Out",
+                            fontSize: 18,
+                            color: Colors.black,
+                            setShadow: true,
+                            fontWeight: FontWeight.w500),
 
                     ],),
                   ),
@@ -177,10 +220,26 @@ class Home extends StatelessWidget {
             ),
             centerTitle: true,
             actions: [
-              IconButton(
-                icon: const Icon(Icons.menu),
-                onPressed: () => toggleMenu(true),
-              )
+              Center(
+                child: Stack(
+                  alignment: Alignment.topLeft,
+                  children: [
+                    Icon(Icons.notifications_outlined,
+                        size: 31, color: Colors.white),
+                    CircleAvatar(
+                      radius: 8,
+                      backgroundColor: Colors.red,
+                      child: Text(
+                        "1",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w700),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
             title: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -210,26 +269,10 @@ class Home extends StatelessWidget {
               ],
             ),
             // Notifications
-            leading: Center(
-              child: Stack(
-                alignment: Alignment.topLeft,
-                children: [
-                  Icon(Icons.notifications_outlined,
-                      size: 31, color: Colors.white),
-                  CircleAvatar(
-                    radius: 8,
-                    backgroundColor: Colors.red,
-                    child: Text(
-                      "1",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            leading:  IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () => toggleMenu(true),
+            )
           ),
           body: SafeArea(
             child: Container(

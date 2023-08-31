@@ -9,7 +9,6 @@ class HomeController extends GetxController{
   RxBool isPlaying = false.obs;
   RxBool isMute=false.obs;
 
-  late List<bool>boolFavorite=List.generate(100, (_) => false);
 
 
 
@@ -33,11 +32,7 @@ class HomeController extends GetxController{
 
 
 
-  // ميثود الاضاقة الى المفضلة
-  void onClickAddToFavorite(int index ){
-     boolFavorite[index]=!boolFavorite[index];
-    update();
-  }
+
 
 }
 
